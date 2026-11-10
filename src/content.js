@@ -41,7 +41,7 @@ export const site = {
   showValidatedResult: true,
 
   // Team email address. Leave empty ('') to hide every contact button and the Contact section.
-  contactEmail: '',
+  contactEmail: '[TBD: team contact email]',
 
   nav: [
     { id: 'index', label: 'Home' },
@@ -137,7 +137,7 @@ export const charts = {
     ],
     // Shown when the items above do not add up to the price.
     remainderLabel: '[TBD: the cost lines above do not add up to the price — confirm the missing line]',
-    caption: 'Contribution is ₹19.65 ○ per ₹99 ○ puck, about 20% ○. Every figure here is an estimate, to be confirmed after final costing.',
+    caption: 'Contribution is ₹19.65 ○ per ₹99 ○ puck, about 20% ○. Every figure here is an estimate, to be confirmed after final costing. Manufacturing labour, curing and synthesis energy, batch QC, and the return bag and QR code are not yet broken out. [TBD: add them, or confirm they are inside puck materials]',
     footnote: 'Bill of materials priced at industrial commodity rates. The prototype itself was built with retail-sourced material, which costs more.',
   },
 };
@@ -316,7 +316,7 @@ export const pages = {
       ],
       goals: [
         'Pilot: 300 ○ households in one arsenic-hotspot block, found through NGO testing camps and served by an SHG federation.',
-        'A self-sustaining district operation needs about 570 ○ households (break-even at about 19 ○ pucks a day).',
+        'Break-even for a district operation: [TBD: households needed, once fixed costs are itemised].',
       ],
     },
 
@@ -390,7 +390,7 @@ export const pages = {
         text: 'Planned influent for column tests ○. A design decision, based on Ballia data and the NSF/ANSI 53 challenge tiers.',
         rows: [
           { label: 'Arsenic, standard tier', value: '50 µg/L ○' },
-          { label: 'Arsenic, high tier', value: '300 µg/L ○ (~10% ● of Ballia tubewells exceed it)' },
+          { label: 'Arsenic, high tier', value: '300 µg/L ○ (~10% ● of Ballia tubewells exceed it). The ~450 L ○ target does not apply here. Capacity target at this tier: [TBD: litres to 10 µg/L at 300 µg/L influent]' },
           { label: 'Lead', value: '150 µg/L ○' },
           { label: 'Calcium', value: '70 mg/L ● (Ballia median, NIH Roorkee study)' },
           { label: 'Iron (Fe²⁺)', value: '5 mg/L ○, as in test V6' },
@@ -605,7 +605,7 @@ export const pages = {
         ['V7 · Flow decline', 'Flow rate as the puck ages', 'Design flow ~3–4 L/h ○', 'Planned ○'],
         ['“What we add” panel', 'Everything the puck could add to the water', 'To be set before the run', 'Planned ○'],
         ['Container blank', 'The same test with no puck, to rule out the housing', 'No change from blank', 'Planned ○'],
-        ['Column breakthrough', 'Litres treated before the outlet reaches 10 µg/L ●, across pH 6.5–8.0 ○', 'Target ~450 L ○', 'Planned ○'],
+        ['Column breakthrough', 'Litres treated before the outlet reaches 10 µg/L ●, across pH 6.5–8.0 ○', '~450 L ○ at 50 µg/L ○ arsenic influent. At 300 µg/L ○: [TBD: capacity target]', 'Planned ○'],
         ['Ester stability', 'Do the binding sites last for 30 days ○ in water', 'To be set before the run', 'Planned ○'],
         ['TCLP leaching', 'Do spent pucks hold on to their metals', 'To be set before the run', 'Planned ○'],
         ['Independent lab verification', 'To be tested at a NABL-accredited laboratory: arsenic by IS 3025 (Part 37), lead by IS 3025 (Part 47).', 'Lab and date to be confirmed. ○', 'Planned before any field pilot'],
@@ -628,10 +628,10 @@ export const pages = {
         ['Arsenic', '10 µg/L ● (provisional)', '0.01 mg/L ●', 'Table 3 (toxic)', 'Target contaminant'],
         ['Lead', '10 µg/L ● (provisional)', '0.01 mg/L ●, no relaxation', 'Table 3 (toxic)', 'Target contaminant'],
         ['Manganese', '0.08 mg/L ● (2021)', '0.1 mg/L ● (permissible 0.3 mg/L ●)', 'Table 2 (undesirable)', 'Must not be released from Zone 1'],
-        ['Silver', 'No health-based guideline; provisional reference value 0.1 mg/L ●', '0.1 mg/L ●, no relaxation', 'Table 2 (undesirable)', 'Must not be released from Zone 2'],
+        ['Silver', 'No guideline value. WHO notes that up to about 0.1 mg/L ● could be tolerated without risk to health', '0.1 mg/L ●, no relaxation', 'Table 2 (undesirable)', 'Must not be released from Zone 2'],
         ['Hardness', 'No health-based guideline', 'Not a Coir-Shield parameter', 'Not applicable', 'Not a target'],
       ],
-      framing: 'Everything Coir-Shield removes is in IS 10500’s toxic table; everything it can add (silver, manganese) is in the “undesirable in excess” table, kept below limits.',
+      framing: 'The two contaminants Coir-Shield targets, arsenic and lead, are in IS 10500’s toxic table (Table 3). Iron, which Zone 0 removes only to protect the arsenic zone, is in the “undesirable in excess” table (Table 2), as are silver and manganese, which the puck could add and must keep below their limits.',
       note: 'Compliance with these limits has not been demonstrated yet. They are the yardsticks for the tests above.',
       source: 'Sources: [[BIS IS 10500:2012|https://consumerhelpline.gov.in/public/assets/docs/bis/IS10500-2012.pdf]] · [[WHO silver fact sheet, 2022|https://cdn.who.int/media/docs/default-source/wash-documents/water-safety-and-quality/chemical-fact-sheets-2022/silver-fact-sheet-2022.pdf]]',
     },
@@ -645,7 +645,7 @@ export const pages = {
     hero: {
       eyebrow: 'Business & impact',
       title: 'Test first. Then earn the sale.',
-      lead: 'Trust is the main barrier. So the model starts with a free test of the household’s own water, and puts a neighbour, not an advert, at the door.',
+      lead: 'We expect trust to be the main barrier, because nobody can see arsenic or lead. So the model starts with a free test of the household’s own water, and puts a neighbour, not an advert, at the door.',
     },
 
     market: {
@@ -666,10 +666,10 @@ export const pages = {
 
     research: {
       eyebrow: 'Customer research',
-      title: 'What a simulated panel told us',
-      label: 'Simulated, not real customers',
-      text: 'A simulated buyer panel of 20 ○ people (AI-generated personas, not real customers): 2 of 20 ○ bought the original pitch; 9 of 20 ○ bought once it included their own water test, an independent lab report and a re-test guarantee. Trust is the main barrier. Real household interviews are planned.',
-      note: 'The panel tested a kirana-sale version of the offer, not SHG doorstep delivery.',
+      title: 'What households and SHG members told us',
+      // One entry per real conversation: { who: 'Household, Ballia block', when: 'Dec 2026', said: 'Short paraphrase', learned: 'What it changed' }
+      conversations: [],
+      empty: '[TBD: summaries of at least five real conversations with households or SHG members — who, when, what they said, and what it changed in our design]',
     },
 
     gtm: {
@@ -703,13 +703,15 @@ export const pages = {
       title: 'Costs: all estimates',
       paras: [
         'Puck materials cost about ₹38 ○. Silver is about ₹11 ○ of that at the target loading, or ₹14–28 ○ at the current bench loading.',
+        'Not yet costed: manufacturing labour, energy for curing and silver synthesis, quality control per batch, and the return bag and QR code. [TBD: add each as its own line, or confirm it is inside the ~₹38]',
         'Per puck we also pay about ₹17.85 ○ for the SHG margin and collection, about ₹2 ○ for transport, about ₹5 ○ for kiln co-processing (not yet quoted), about ₹15 ○ for re-tests and refunds, ₹0.50 ○ for an SMS or missed-call swap reminder, and ₹1.00 ○ for the dated swap card and Hindi report-card printing.',
         'The filter unit costs ₹104–223 ○, one-time. [[B2B listings, Jun 2026]]',
       ],
       facts: [
-        { label: 'Break-even', value: 'About 19 ○ pucks a day (~570 ○ households)' },
-        { label: 'Pilot, year one', value: 'The pilot of 300 ○ households loses about ₹93,000 ○' },
-        { label: 'Cash needed', value: 'About ₹3.5 lakh ○, including ₹66,900 ○ for CSR-funded filter units. To be funded by grants and CSR.' },
+        { label: 'Fixed costs per year', value: '[TBD: list each fixed-cost line with its annual amount (e.g. hub rent, staff, testing equipment, travel) and the total]' },
+        { label: 'Break-even', value: 'Fixed costs ÷ ₹19.65 ○ contribution per puck. [TBD: recompute from the fixed-cost total above; the earlier estimate of about 19 ○ pucks a day (~570 ○ households) implies about ₹1.36 lakh ○ a year, which is not yet itemised]' },
+        { label: 'Pilot, year one', value: '300 ○ households × 12 × ₹19.65 ○ = ₹70,740 ○ contribution, minus fixed costs. [TBD: pilot result once fixed costs are listed]' },
+        { label: 'Cash needed', value: 'Includes ₹66,900 ○ for CSR-funded filter units. To be funded by grants and CSR. [TBD: total, recomputed with the pilot result]' },
       ],
     },
 
@@ -721,6 +723,7 @@ export const pages = {
         'Spent pucks are sealed in a return bag, QR-scanned, and aggregated at block level.',
         'They are dried and shredded, then co-processed in a cement kiln at more than 1,400 °C ●, where the metals are bound into clinker.',
         'No kiln operator has quoted for this yet, and leaching tests on spent pucks are still on our validation plan.',
+        'Next step ○: ask a cement company that already co-processes waste for a letter of interest. [TBD: company approached, date, and its reply]',
       ],
       link: 'See the life of one puck',
     },
@@ -812,14 +815,14 @@ export const pages = {
       title: 'Who we are',
       list: [
         // Optional per member: resp: '…' (responsibilities) and bio: '…'
-        { name: 'Vardaan Potdar', role: 'Founder & CEO' },
-        { name: 'Aradhya Tibrewalla', role: 'CTO' },
-        { name: 'Swarit Garg', role: 'CFO' },
-        { name: 'Ayush Agarwal', role: 'COO' },
+        { name: 'Vardaan Potdar', role: 'Founder & CEO', resp: '[TBD: one line on what Vardaan actually does]' },
+        { name: 'Aradhya Tibrewalla', role: 'CTO', resp: '[TBD: one line on what Aradhya actually does]' },
+        { name: 'Swarit Garg', role: 'CFO', resp: '[TBD: one line on what Swarit actually does]' },
+        { name: 'Ayush Agarwal', role: 'COO', resp: '[TBD: one line on what Ayush actually does]' },
       ],
-      coachLabel: 'Coach',
-      // To show a coach card: coach: { name: '…', role: 'Team coach', bio: '…' }
-      coach: null,
+      coachLabel: 'Mentor / teacher adviser',
+      // Set to null to hide the card.
+      coach: { name: '[TBD: mentor or teacher adviser name]', role: '[TBD: title and school or organisation]', bio: '[TBD: one line on how they help the team]' },
       schoolLabel: 'School',
       school: 'Jayshree Periwal International School (JPIS), Jaipur',
     },

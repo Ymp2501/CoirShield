@@ -437,9 +437,12 @@ ${section(
       ${p.market.paras.map((x) => `<p>${fmt(x)}</p>`).join('')}
       <div class="callout research">
         <p class="eyebrow">${fmt(p.research.eyebrow)}</p>
-        <h3>${fmt(p.research.title)} <span class="status status-pending">${fmt(p.research.label)}</span></h3>
-        <p>${fmt(p.research.text)}</p>
-        <p class="fact-src">${fmt(p.research.note)}</p>
+        <h3>${fmt(p.research.title)}</h3>
+        ${
+          p.research.conversations.length
+            ? `<ul class="convos">${p.research.conversations.map((c) => `<li><p class="fact-src">${fmt(c.who)} · ${fmt(c.when)}</p><p>${fmt(c.said)}</p><p><strong>What it changed:</strong> ${fmt(c.learned)}</p></li>`).join('')}</ul>`
+            : `<p>${fmt(p.research.empty)}</p>`
+        }
       </div>
     </div>
     <div${reveal(1)}>${factList(p.market.facts)}</div>
