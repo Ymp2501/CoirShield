@@ -89,8 +89,8 @@ export function renderFooter() {
     <div class="footer-col">
       <h2>${esc(f.legendTitle)}</h2>
       ${legend(false)}
-      <h2 class="footer-contact-title">${esc(f.contactTitle)}</h2>
-      <p>${contactLink(f.contactLabel, 'text-link')}</p>
+      ${site.contactEmail && site.contactEmail.trim() ? `<h2 class="footer-contact-title">${esc(f.contactTitle)}</h2>
+      <p>${contactLink(f.contactLabel, 'text-link')}</p>` : ''}
     </div>
   </div>
   <p class="footer-disclaimer"><strong>${esc(site.disclaimer.title)}.</strong> ${fmt(site.disclaimer.text)}</p>

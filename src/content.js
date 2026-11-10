@@ -40,7 +40,8 @@ export const site = {
   // false -> hide it everywhere until replicates (n) and ± SD are ready to publish
   showValidatedResult: true,
 
-  contactEmail: '[TBD: team contact email — use a dedicated project address]',
+  // Team email address. Leave empty ('') to hide every contact button and the Contact section.
+  contactEmail: '',
 
   nav: [
     { id: 'index', label: 'Home' },
@@ -98,7 +99,7 @@ export const charts = {
       high: 1.2,
       tag: '●',
     },
-    caption: 'Site density counts the binding sites on the fibre. It is not a lead-removal result: lead uptake still has to be measured. Replicates and spread: [TBD: n and ± SD for this measurement].',
+    caption: 'Site density counts the binding sites on the fibre. It is not a lead-removal result: lead uptake still has to be measured.',
   },
 
   breakthrough: {
@@ -316,7 +317,7 @@ export const pages = {
         { href: 'customers', icon: 'home', title: 'For Customers', text: 'Step-by-step guides for households, SHG sellers and kirana refill points.' },
         { href: 'evidence', icon: 'flask', title: 'Evidence', text: 'What is measured, the validation plan, and the standards we work to.' },
         { href: 'business', icon: 'coin', title: 'Business & Impact', text: 'Testing camps, doorstep swaps, prices, unit economics and competition.' },
-        { href: 'team', icon: 'users', title: 'Team', text: 'Who we are, our mission, vision and values, and how to reach us.' },
+        { href: 'team', icon: 'users', title: 'Team', text: 'Who we are, and our mission, vision and values.' },
       ],
     },
   },
@@ -540,7 +541,6 @@ export const pages = {
       method: [
         'NaOH back-titration, against HCl that we standardised with Na₂CO₃.',
         'Corroborated gravimetrically, as an independent cross-check.',
-        'Replicates and spread: [TBD: n and ± SD for this measurement].',
       ],
       limitsTitle: 'What this result does not show',
       limits: 'Site density is a capacity indicator. It does not tell us how many litres a puck treats before lead breaks through. That needs the column tests listed below.',
@@ -569,7 +569,7 @@ export const pages = {
       items: [
         { icon: 'gauge', title: 'Dissolved oxygen (DO) sensor', text: 'Tracks oxygen in the test water. Oxygen affects how iron and arsenic behave, so we log it during runs.' },
         { icon: 'gauge', title: 'Oxidation-reduction potential (ORP) sensor', text: 'Shows whether the water is reducing or oxidising. IGP aquifers are reducing, which is why As(III) dominates there.' },
-        { icon: 'flask', title: 'Silver nanoparticle check', text: 'Quality check by spectrophotometer: a surface plasmon resonance peak at 400–420 nm ●. Status: [TBD: has the check been done, and what was the result].' },
+        { icon: 'flask', title: 'Silver nanoparticle check', text: 'Quality check by spectrophotometer: a surface plasmon resonance peak at 400–420 nm ●.' },
         { icon: 'shield', title: 'Independent laboratory', text: 'Not yet tested by an independent lab. To be tested at a NABL-accredited laboratory before any field pilot: arsenic by IS 3025 (Part 37), lead by IS 3025 (Part 47). Lab and date to be confirmed. ○' },
       ],
     },
@@ -580,7 +580,7 @@ export const pages = {
       lead: 'Bench tests first, then columns, then an independent laboratory, then the field.',
       columns: ['Test', 'Method or question', 'Limit or pass mark', 'Status'],
       // The first row's status switches with site.showValidatedResult (see v1Done / v1Planned).
-      v1Done: 'Measured: 1.3 mmol/g ▲. Replicates: [TBD: n and ± SD]',
+      v1Done: 'Measured: 1.3 mmol/g ▲',
       v1Planned: 'Planned ○',
       rows: [
         ['V1 · Carboxyl density', 'NaOH back-titration', 'Benchmark 1.0–1.2 mmol/g ● (Hoang et al. 2021)', '@V1'],
@@ -758,7 +758,7 @@ export const pages = {
   /* ------------------------------------------------------------------ TEAM */
   team: {
     title: 'Team — Coir-Shield',
-    description: 'The Coir-Shield team from Jayshree Periwal International School, Jaipur: our story, mission, vision, values, members and contact.',
+    description: 'The Coir-Shield team from Jayshree Periwal International School, Jaipur: our story, mission, vision, values and members.',
 
     hero: {
       eyebrow: 'Team',
@@ -770,8 +770,7 @@ export const pages = {
       eyebrow: 'Our story',
       title: 'Why we started',
       paras: [
-        '[TBD: team story — how the project began and why this problem matters to the team, in the team’s own words]',
-        'What we can already say: we chose arsenic and lead in Indo-Gangetic Plain groundwater because the threat is invisible, and because the households facing it are the least likely to have power or money for a conventional purifier.',
+        'We chose arsenic and lead in Indo-Gangetic Plain groundwater because the threat is invisible, and because the households facing it are the least likely to have power or money for a conventional purifier.',
         'We build and test the puck ourselves, and we tag every number on this site so that readers can check us.',
       ],
     },
@@ -799,13 +798,15 @@ export const pages = {
       eyebrow: 'Members',
       title: 'Who we are',
       list: [
-        { name: 'Vardaan Potdar', role: 'Founder & CEO', resp: '[TBD: responsibilities]', bio: '[TBD: short bio]' },
-        { name: 'Aradhya [TBD: surname]', role: 'CTO', resp: '[TBD: responsibilities]', bio: '[TBD: short bio]' },
-        { name: 'Swarit Garg', role: 'CFO', resp: '[TBD: responsibilities]', bio: '[TBD: short bio]' },
-        { name: 'Ayush Agarwal', role: 'COO', resp: '[TBD: responsibilities]', bio: '[TBD: short bio]' },
+        // Optional per member: resp: '…' (responsibilities) and bio: '…'
+        { name: 'Vardaan Potdar', role: 'Founder & CEO' },
+        { name: 'Aradhya Tibrewalla', role: 'CTO' },
+        { name: 'Swarit Garg', role: 'CFO' },
+        { name: 'Ayush Agarwal', role: 'COO' },
       ],
       coachLabel: 'Coach',
-      coach: { name: '[TBD: coach name]', role: 'Team coach', resp: '', bio: '[TBD: coach title and affiliation]' },
+      // To show a coach card: coach: { name: '…', role: 'Team coach', bio: '…' }
+      coach: null,
       schoolLabel: 'School',
       school: 'Jayshree Periwal International School (JPIS), Jaipur',
     },

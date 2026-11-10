@@ -5,6 +5,7 @@ import { icon, puckSvg, housingSvg, lifecycleSvg, carboxylateChart, breakthrough
 import { disclaimerBox, legend, contactLink } from './layout.js';
 
 const SHOW_V = site.showValidatedResult === true;
+const HAS_EMAIL = Boolean(site.contactEmail && site.contactEmail.trim());
 
 /* ------------------------------------------------------------- helpers */
 const reveal = (i = 0) => ` data-reveal style="--rd:${i * 80}ms"`;
@@ -300,14 +301,18 @@ ${pageHero(p.hero, `<p class="hero-tagline">${fmt(site.nameHi)} · ${fmt(site.ta
     .join('')}
 </div>
 
-${section(
-  'help',
-  `<div class="cta-card">
+${
+  HAS_EMAIL
+    ? section(
+        'help',
+        `<div class="cta-card">
     <h2 id="help-h">${fmt(p.help.title)}</h2>
     <p>${fmt(p.help.text)}</p>
     <p>${contactLink(site.footer.contactLabel)}</p>
   </div>`,
-)}`;
+      )
+    : ''
+}`;
 }
 
 /* -------------------------------------------------------------- EVIDENCE */
@@ -463,7 +468,7 @@ function team() {
     <h3>${fmt(m.name)}</h3>
     <p class="member-role">${fmt(m.role)}</p>
     ${m.resp ? `<p class="member-resp">${fmt(m.resp)}</p>` : ''}
-    <p>${fmt(m.bio)}</p>
+    ${m.bio ? `<p>${fmt(m.bio)}</p>` : ''}
   </li>`;
   return `
 ${pageHero(p.hero)}
@@ -494,19 +499,23 @@ ${section(
   <ul class="member-grid">
     ${p.members.list.map((m) => member(m)).join('')}
   </ul>
-  <ul class="member-grid coach-row">${member(p.members.coach, p.members.coachLabel)}</ul>
+  ${p.members.coach ? `<ul class="member-grid coach-row">${member(p.members.coach, p.members.coachLabel)}</ul>` : ''}
   <p class="school"><strong>${fmt(p.members.schoolLabel)}:</strong> ${fmt(p.members.school)}</p>`,
 )}
 
-${section(
-  'contact',
-  `<div class="cta-card">
+${
+  HAS_EMAIL
+    ? section(
+        'contact',
+        `<div class="cta-card">
     <p class="eyebrow">${fmt(p.contact.eyebrow)}</p>
     <h2 id="contact-h">${fmt(p.contact.title)}</h2>
     <p>${fmt(p.contact.text)}</p>
     <p>${contactLink(p.contact.button)}</p>
   </div>`,
-)}`;
+      )
+    : ''
+}`;
 }
 
 const bodyClass = `theme-${site.theme === 'dark' ? 'dark' : 'light'}`;
