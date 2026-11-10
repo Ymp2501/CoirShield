@@ -49,7 +49,10 @@ console.log(`  checked ${linkCount} internal links in ${htmlFiles.length} pages`
 const ALLOW = [
   /\bzones? [0-2]\b/gi, // zone names
   /\bTable [23]\b/g, // table names inside BIS IS 10500:2012
-  /\bIS 10500:2012\b/g, // the standard's identifier
+  /\bIS 10500(?::2012)?/g, // the standard's identifier
+  /\bNSF\/ANSI 53\b/g, // another standard's identifier
+  /\bESP32\b/g, // a part name
+  /\bV[1-7]\b/g, // validation test labels
   /\b4th\b/g, // "4th edition" of the WHO guidelines
   /\b(?:19|20)\d\d(?:-\d\d)?\b/g, // years: citations, competition season, copyright
 ];
@@ -62,6 +65,8 @@ console.log('2. Numeral scan (every numeral needs ▲ ● ○ or a [TBD])');
 let numerals = 0;
 for (const f of htmlFiles) {
   let html = readFileSync(join(dist, f), 'utf8');
+  // source citations (question numbers, dates, page numbers) are part of a ● tag, not quantities
+  html = html.replace(/<(a|span) class="src"[^>]*>[\s\S]*?<\/\1>/g, ' ');
   html = html.replace(/<script[\s\S]*?<\/script>/g, '').replace(/<style[\s\S]*?<\/style>/g, '').replace(/<!--[\s\S]*?-->/g, '');
   const blocks = [];
   // text carried in attributes that people read or hear
@@ -90,8 +95,17 @@ console.log(`  checked ${numerals} numerals`);
 /* ------------------------------------------------------- 3. banned terms */
 console.log('3. Banned terms');
 const BANNED = [
-  'citize-coir', 'disrupt boffin', 'two-stage', 'two stage', 'mercerised', 'mercerized', 'coirshield', 'coir shield',
-  'cartridge', '2.4×', '2.4x', 'amphibian', 'ecocide', 'mining rig', 'battery', 'safe to drink', 'certified safe',
+  // names and wording
+  'citize', 'boffin', 'two-stage', 'two stage', 'mercerised', 'mercerized', 'coirshield', 'coir shield', 'cartridge',
+  'lid on your bucket', 'zero behaviour change', 'patent pending', 'pyrolysis', 'dithizone',
+  // retired numbers
+  '22–50 year', '3–8 year', 'log kf', '79×', '2.4×', '2.4x', '0.55 mmol', '85% removal', '200 million clay pot',
+  '₹26', '₹75 delivered', '₹312',
+  // claims we must never make
+  'arsenic-free', '100% safe', 'safe to drink', 'certified safe', 'hardness exceeds who',
+  'amphibian', 'ecocide', 'mining rig', 'battery',
+  // retired team wording
+  'swarit garg — ceo', 'ceo · strategy', 'vardaan potdar — cto', 'cto · materials', 'open role', 'role open',
 ];
 const scanFiles = [
   ...htmlFiles.map((f) => join(dist, f)),

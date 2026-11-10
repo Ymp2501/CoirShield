@@ -46,8 +46,13 @@ npm run verify
 
 1. Every number gets one tag straight after it: `▲` our measurement, `●` literature or standard, `○` target.
 2. Unknown facts are written `[TBD: what is needed]`. They show as highlighted placeholders.
-3. To let search engines index the site, set `noindex: false` near the top of `src/content.js`.
-4. Never add process recipes (concentrations, times, temperatures, loadings, masses).
+3. Sources are written `[[label|https://link]]`. Numbers inside a source label need no tag.
+4. Switches near the top of `src/content.js`:
+   - `noindex` — `false` lets search engines index the site.
+   - `theme` — `'light'` or `'dark'` for the whole site.
+   - `darkHero` — `true` puts the Home hero on a dark band.
+   - `showValidatedResult` — `false` hides our own 1.3 mmol/g measurement everywhere until replicates and spread are ready.
+5. Never add process recipes (concentrations, times, temperatures, loadings, masses).
 
 ## Deploy to Vercel
 

@@ -131,28 +131,77 @@ export function puckSvg(zones, t, { id = 'puck', compact = false } = {}) {
 </svg>`;
 }
 
-/* --------------------------------------------------------- LIFECYCLE RING */
+/* ------------------------------------------------------- FILTER HOUSING */
+/** Labelled cross-section of the two-chamber gravity filter. d = pages.how.device */
+export function housingSvg(d) {
+  const call = (k, cx, cy, tx, ty) =>
+    `<path d="M${cx} ${cy}L${tx} ${ty}" class="hs-lead"/><g class="hs-call"><circle cx="${cx}" cy="${cy}" r="13"/><text x="${cx}" y="${cy + 4.5}" text-anchor="middle">${esc(k)}</text></g>`;
+  const k = d.parts.map((p) => p.key);
+  return `
+<svg class="housing-svg" viewBox="0 0 360 500" role="img" aria-labelledby="hs-title">
+  <title id="hs-title">${esc(d.alt)}</title>
+  <!-- lid -->
+  <rect x="166" y="26" width="28" height="14" rx="5" class="hs-part"/>
+  <rect x="96" y="40" width="168" height="14" rx="7" class="hs-part"/>
+  <!-- upper chamber -->
+  <rect x="104" y="54" width="152" height="170" rx="8" class="hs-wall"/>
+  <rect x="109" y="98" width="142" height="121" rx="4" class="hs-raw"/>
+  <path d="M109 80H251" class="hs-plate"/>
+  <text x="180" y="150" text-anchor="middle" class="hs-water-lbl">${esc(d.labels.raw)}</text>
+  <!-- collar, gasket, puck, support plate -->
+  <rect x="126" y="224" width="108" height="74" class="hs-collar"/>
+  <rect x="131" y="229" width="7" height="64" rx="2" class="hs-gasket"/>
+  <rect x="222" y="229" width="7" height="64" rx="2" class="hs-gasket"/>
+  <rect x="140" y="230" width="80" height="18" class="hs-z0"/>
+  <rect x="140" y="248" width="80" height="24" class="hs-z1"/>
+  <rect x="140" y="272" width="80" height="20" class="hs-z2"/>
+  <rect x="140" y="230" width="80" height="62" class="hs-puck"/>
+  <path d="M130 297H230" class="hs-plate"/>
+  <!-- lower chamber and tap -->
+  <rect x="104" y="300" width="152" height="160" rx="8" class="hs-wall"/>
+  <rect x="109" y="384" width="142" height="71" rx="4" class="hs-treated"/>
+  <text x="180" y="425" text-anchor="middle" class="hs-water-lbl">${esc(d.labels.treated)}</text>
+  <path d="M256 436h20" class="hs-tap"/><path d="M282 428v26" class="hs-tap hs-tap-spout"/><path d="M276 426h14" class="hs-tap hs-tap-handle"/>
+  <g class="hs-drops" aria-hidden="true"><circle cx="165" cy="322" r="3.5"/><circle cx="180" cy="346" r="3.5"/><circle cx="195" cy="328" r="3.5"/><circle cx="180" cy="370" r="3.5"/></g>
+  <!-- puck label -->
+  <path d="M74 261H140" class="hs-lead"/>
+  <text x="70" y="265.5" text-anchor="end" class="hs-puck-lbl">${esc(d.labels.puck)}</text>
+  <!-- callouts, keyed to the parts list -->
+  ${call(k[0], 314, 140, 256, 140)}
+  ${call(k[1], 46, 80, 109, 80)}
+  ${call(k[2], 314, 244, 234, 244)}
+  ${call(k[3], 46, 310, 130, 297)}
+  ${call(k[4], 314, 400, 256, 400)}
+  ${call(k[5], 314, 47, 264, 47)}
+</svg>`;
+}
+
+/* -------------------------------------------------------- PUCK JOURNEY */
+/** An open ring: the journey ends at the kiln, so the last node does not point back to the first. */
 export function lifecycleSvg(lc) {
-  const C = 200, R = 132, n = lc.steps.length;
+  const C = 200, R = 134, n = lc.steps.length;
+  const ang = (i) => ((-90 + (i * 360) / n) * Math.PI) / 180;
+  const pt = (a) => [C + R * Math.cos(a), C + R * Math.sin(a)];
   let nodes = '', heads = '';
   lc.steps.forEach((s, i) => {
-    const a = ((-90 + (i * 360) / n) * Math.PI) / 180;
-    const x = C + R * Math.cos(a), y = C + R * Math.sin(a);
+    const [x, y] = pt(ang(i));
     nodes += `
-    <g class="lc-node">
-      <circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="30"/>
-      <g transform="translate(${(x - 13).toFixed(1)} ${(y - 13).toFixed(1)}) scale(1.08)" class="lc-icon">${iconInner(s.icon)}</g>
-      <text x="${x.toFixed(1)}" y="${(y + 49).toFixed(1)}" text-anchor="middle">${esc(s.short)}</text>
+    <g class="lc-node${i === n - 1 ? ' lc-end' : ''}">
+      <circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="27"/>
+      <g transform="translate(${(x - 12).toFixed(1)} ${(y - 12).toFixed(1)})" class="lc-icon">${iconInner(s.icon)}</g>
+      <text x="${x.toFixed(1)}" y="${(y + 45).toFixed(1)}" text-anchor="middle">${esc(s.short)}</text>
     </g>`;
-    const m = -90 + ((i + 0.5) * 360) / n; // arrowhead halfway to the next node
-    const mr = (m * Math.PI) / 180;
-    const hx = C + R * Math.cos(mr), hy = C + R * Math.sin(mr);
-    heads += `<path d="M-7 -6 7 0 -7 6Z" transform="translate(${hx.toFixed(1)} ${hy.toFixed(1)}) rotate(${(m + 90).toFixed(1)})" class="lc-head"/>`;
+    if (i < n - 1) {
+      const m = -90 + ((i + 0.5) * 360) / n; // arrowhead halfway to the next node
+      const [hx, hy] = pt((m * Math.PI) / 180);
+      heads += `<path d="M-7 -6 7 0 -7 6Z" transform="translate(${hx.toFixed(1)} ${hy.toFixed(1)}) rotate(${(m + 90).toFixed(1)})" class="lc-head"/>`;
+    }
   });
+  const [sx, sy] = pt(ang(0)), [ex, ey] = pt(ang(n - 1));
   return `
-<svg class="lifecycle-svg" viewBox="0 0 400 400" role="img" aria-labelledby="lc-title">
+<svg class="lifecycle-svg" viewBox="0 0 400 410" role="img" aria-labelledby="lc-title">
   <title id="lc-title">${esc(lc.alt)}</title>
-  <circle cx="${C}" cy="${C}" r="${R}" class="lc-ring"/>
+  <path d="M${sx.toFixed(1)} ${sy.toFixed(1)}A${R} ${R} 0 1 1 ${ex.toFixed(1)} ${ey.toFixed(1)}" class="lc-ring"/>
   ${heads}
   ${nodes}
   <text x="${C}" y="${C - 2}" text-anchor="middle" class="lc-centre">${esc(lc.centre[0])}</text>
@@ -220,19 +269,23 @@ export function breakthroughChart(c) {
 </figure>`;
 }
 
-/** Cost split bar. Built from charts.cost. */
-export function costChart(c) {
-  const summary = `${c.title}. ${c.silverLabel}: about ${c.silverShare} percent, design target. ${c.otherLabel}.`;
+/** Stacked bar: where the price of one puck goes. Built from charts.unit. */
+export function unitChart(c) {
+  const money = (v) => `₹${Number.isInteger(v) ? v : v.toFixed(2)}`;
+  const sum = c.items.reduce((t, i) => t + i.value, 0);
+  const rest = Math.round((c.price - sum) * 100) / 100;
+  const segs = c.items.map((it, i) => ({ ...it, cls: it.highlight ? 'seg-hi' : `seg-${i}` }));
+  const summary = `${c.title}. ${c.items.map((i) => `${i.label}: ${money(i.value)}, design target`).join('. ')}.`;
   return `
-<figure class="chart chart-cost" data-status="${c.status}">
+<figure class="chart chart-unit" data-status="${c.status}">
   <figcaption class="chart-head"><span class="chart-title">${fmt(c.title)}</span><span class="status status-${c.status}">${fmt(c.statusLabel)}</span></figcaption>
-  <p class="cost-total">${fmt(c.total)}</p>
+  <p class="cost-total">${fmt(c.priceLabel)}</p>
   <div class="split" role="img" aria-label="${esc(summary)}">
-    <div class="split-a" style="width:${c.silverShare}%"></div><div class="split-b"></div>
+    ${segs.map((g) => `<div class="${g.cls}" style="width:${((g.value / c.price) * 100).toFixed(2)}%"></div>`).join('')}${rest > 0.004 ? '<div class="seg-rest"></div>' : ''}
   </div>
   <ul class="split-key">
-    <li><span class="key key-a"></span>${fmt(`${c.silverLabel}: ~${c.silverShare}% ${c.silverTag}`)}</li>
-    <li><span class="key key-b"></span>${fmt(c.otherLabel)}</li>
+    ${segs.map((g) => `<li><span class="key ${g.cls}"></span><span>${fmt(g.label)}</span><span class="key-val">${fmt(`${money(g.value)} ${g.tag}`)}</span></li>`).join('')}
+    ${rest > 0.004 ? `<li class="key-rest"><span class="key seg-rest"></span><span>${fmt(c.remainderLabel)}</span></li>` : ''}
   </ul>
   <p class="chart-caption">${fmt(c.caption)}</p>
   <p class="chart-foot">${fmt(c.footnote)}</p>

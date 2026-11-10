@@ -21,43 +21,38 @@ Keep clear space around the lockup equal to the height of one band group. Do not
 
 | Role | Typeface | Why |
 | --- | --- | --- |
-| Headings | Syne 700 / 800 | Existing brand face. |
-| Data, labels, tags, figures | Space Mono 400 / 700 | Existing brand face. Fixed-width digits make numbers and their ▲ ● ○ tags line up. |
-| Body | Inter 400 / 600 | Chosen companion. Syne is wide and expressive, so body text needs a quiet, narrow-ish face with a tall x-height that stays readable at small sizes on low-cost phones. Inter also covers the characters this site needs (₹, µ, subscripts and superscripts such as ₂ and ²⁺). |
+| English display | Syne 700 / 800 | Existing brand face. |
+| Numbers, labels, ▲ ● ○ tags | Space Mono 400 / 700 | Existing brand face. Fixed-width digits make numbers and their tags line up. |
+| Body and all Hindi | Mukta 400 / 600 | One family covers Devanagari and Latin, so Hindi and English sit together at the same weight and size. Open licence (OFL). Used for all body text so customer-facing and judge-facing pages read the same. |
+
+## Hindi
+
+- Product line: जाँच शील्ड
+- Tagline: जाँच से भरोसा: Trust you can test.
+
+Both are set in `site.nameHi` and `site.taglineHi` in `src/content.js`, written as `{{hi|…}}` so they are marked as Hindi for screen readers.
 
 ## Colour
 
-The site uses the **light scheme** on every page. The scheme is set by one line in `src/content.js`:
-`theme: 'light'` (change to `'dark'` for teal on near-black, to match the deck). It is a build setting, not a visitor toggle.
-
-Light scheme (current):
+Light scheme on every page, set by `theme: 'light'` in `src/content.js`. The Home hero alone sits on a dark band (`darkHero: true`; set it to `false` for an all-light Home).
 
 | Token | Value | Use |
 | --- | --- | --- |
-| Background | `#f6f3ec` | Page |
-| Surface | `#ffffff` | Cards |
-| Ink | `#10202a` | Text |
-| Muted | `#44545e` | Secondary text |
-| Brand teal | `#4fc3a1` | Fills and decoration only: puck outline, chart bar, heading underline, page glow |
-| Deep teal | `#0b6b55` | Links, buttons, labels, validated ▲ (the brand teal is too pale for text on a light page) |
-| Blue | `#1f4fa3` | Literature ● |
-| Amber-brown | `#7d5200` | Target ○, status pills |
-| Placeholder | `#fff0c2` | [TBD] highlights and warnings |
+| Paper | `#FAF6EE` | Page background |
+| Surface | `#FFFFFF` | Cards |
+| Ink | `#10202A` | Text |
+| Deep teal | `#0B5C4E` | Links, buttons, labels, validated ▲ |
+| Coir brown | `#7A4A1E` | Target ○, status pills, callout edges |
+| Blue | `#1F4FA3` | Literature ● |
+| Signal teal | `#4FC3A1` | Fills and decoration only. Never text on a light background (contrast is too low). |
+| Night | `#0A0E14` | Home hero band only, with Signal teal |
+| Placeholder | `#FFF0C2` | [TBD] highlights and warnings |
 
-Dark scheme (available, matches the deck):
+Diagrams follow the scheme of the area they sit in. The biochar zone stays dark in both, because biochar is black.
 
-| Token | Value | Use |
-| --- | --- | --- |
-| Background | `#0a0e14` | Page |
-| Surface | `#121a24` | Cards |
-| Ink | `#eef3f6` | Text |
-| Teal | `#4fc3a1` | Accent, links, validated ▲ |
-| Blue | `#9cc0ff` | Literature ● |
-| Amber | `#f2c14e` | Target ○, placeholders, warnings |
+## Logo rules
 
-The light values are our best match to the poster. If the poster uses different exact values, change the first token block at the top of `src/styles.css`.
-
-Diagrams follow the page scheme. The biochar zone stays dark in both, because biochar is black.
+No certification-seal, government-emblem or ISI/BIS-style shapes. The mark is a plain shield outline with three bands and a drop; it carries no tick, star, ring of text or laurel.
 
 ## Provenance marks
 

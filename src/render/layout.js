@@ -4,7 +4,7 @@ import { esc, fmt, pageHref, isTbd } from './util.js';
 import { logoMark, icon } from './svg.js';
 
 const FONTS =
-  'https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Space+Mono:wght@400;700&family=Syne:wght@700;800&display=swap';
+  'https://fonts.googleapis.com/css2?family=Mukta:wght@400;600&family=Space+Mono:wght@400;700&family=Syne:wght@700;800&display=swap';
 
 export function renderHead(page) {
   return [
@@ -78,6 +78,7 @@ export function renderFooter() {
   <div class="footer-inner">
     <div class="footer-brand">
       ${brand()}
+      <p class="footer-tagline">${fmt(site.taglineHi)}</p>
       <p>${fmt(f.blurb)}</p>
       <p class="footer-context">${fmt(f.context)}<br>${fmt(f.school)}</p>
     </div>
