@@ -1,7 +1,7 @@
 // One render function per page. Layout only: all words and numbers come from content.js.
 import { site, pages, zones, lifecycle, charts } from '../content.js';
 import { esc, fmt, pageHref } from './util.js';
-import { icon, puckSvg, housingSvg, lifecycleSvg, carboxylateChart, breakthroughChart, unitChart } from './svg.js';
+import { icon, puckSvg, housingSvg, glassesSvg, lifecycleSvg, carboxylateChart, breakthroughChart, unitChart } from './svg.js';
 import { disclaimerBox, legend, contactLink } from './layout.js';
 
 const SHOW_V = site.showValidatedResult === true;
@@ -123,41 +123,98 @@ const puckFigure = (caption, opts) => `
 </figure>`;
 
 /* ----------------------------------------------------------------- HOME */
+// Light 3D puck: three stacks of thin discs in CSS 3D space. No library.
+function puck3d(h) {
+  const slices = (n) => Array.from({ length: n }, (_, k) => `<i style="--k:${k}"></i>`).join('');
+  return `
+<figure class="puck3d-figure">
+  <div class="puck3d" role="img" aria-label="${esc(h.figureAlt)}" data-tilt>
+    <div class="p3-scene">
+      <div class="p3-shadow"></div>
+      <div class="p3-layer p3-z2">${slices(14)}</div>
+      <div class="p3-layer p3-z1">${slices(14)}</div>
+      <div class="p3-layer p3-z0">${slices(14)}</div>
+      <span class="p3-drop d1"></span><span class="p3-drop d2"></span><span class="p3-drop d3"></span>
+    </div>
+  </div>
+  <ul class="p3-legend">
+    ${zones.map((z, i) => `<li class="p3-key-${i}"><span class="p3-dot"></span>${esc(z.label)} · ${esc(z.short)}</li>`).join('')}
+  </ul>
+  <figcaption>${fmt(h.figureCaption)}</figcaption>
+</figure>`;
+}
+
 function home() {
   const p = pages.home;
-  const [t1, t2, hi, t3] = p.hero.title;
+  const h1 = p.hero.title
+    .map((l) => (l.startsWith('*') ? `<span class="h1-line"><em>${esc(l.slice(1))}</em></span>` : `<span class="h1-line">${esc(l)}</span>`))
+    .join(' ');
   const stats = p.snapshot.stats.filter((s) => SHOW_V || !s.validatedOnly);
+  const g = p.glasses;
   return `
 <div class="hero-band${site.darkHero ? ' theme-dark' : ''}">
 <section class="hero" aria-labelledby="page-h">
   <div class="hero-copy">
     ${p.hero.eyebrow ? `<p class="eyebrow">${fmt(p.hero.eyebrow)}</p>` : ''}
-    <h1 id="page-h">${esc(t1)} ${esc(t2)}<em>${esc(hi)}</em>${esc(t3)}</h1>
+    <h1 id="page-h">${h1}</h1>
     <p class="hero-sub">${fmt(p.hero.sub)}</p>
     <p class="hero-tagline">${fmt(site.taglineHi)}</p>
     <div class="actions">${btn(p.hero.primary, 'btn-primary')}${btn(p.hero.secondary, 'btn-outline')}</div>
-    ${disclaimerBox()}
+    <p class="proto-chip">${icon('alert')}<span>${fmt(p.hero.note)}</span></p>
   </div>
-  <div class="hero-figure">${puckFigure(p.hero.figureCaption, { id: 'hero-puck', compact: true })}</div>
+  <div class="hero-figure">${puck3d(p.hero)}</div>
 </section>
 </div>
 
 ${section(
-  'problem',
-  `<div class="split-grid top">
-    <div${reveal()}>
-      <p class="eyebrow">${fmt(p.problem.eyebrow)}</p>
-      <h2 id="problem-h">${fmt(p.problem.title)}</h2>
-      ${p.problem.paras.map((x) => `<p>${fmt(x)}</p>`).join('')}
+  'glasses',
+  `<div class="split-grid">
+    <figure class="glasses-figure"${reveal()}>
+      ${glassesSvg(g)}
+      <figcaption>${fmt(g.note)}</figcaption>
+    </figure>
+    <div${reveal(1)}>
+      <p class="eyebrow">${fmt(g.eyebrow)}</p>
+      <h2 id="glasses-h">${fmt(g.title)}</h2>
+      <p class="lead">${fmt(g.text)}</p>
     </div>
-    <div${reveal(1)}>${factList(p.problem.facts, 'facts-text')}</div>
   </div>`,
+)}
+
+${section(
+  'problem',
+  `<h2 id="problem-h" class="sr-only">${fmt(p.problem.title)}</h2>
+  <div class="bigstat"${reveal()}>
+    <p class="bigstat-value">${fmt(p.problem.big.value)}</p>
+    <div>
+      <p class="bigstat-text">${fmt(p.problem.big.text)}</p>
+      <p class="fact-src">${fmt(p.problem.big.source)}</p>
+    </div>
+  </div>
+  <div class="prose-2">${p.problem.paras.map((x) => `<p>${fmt(x)}</p>`).join('')}</div>
+  ${factList(p.problem.facts, 'facts-text facts-row')}`,
+  'section-flush',
 )}
 
 ${section(
   'solution',
   `${head(p.solution, { id: 'solution-h', center: true })}
-  ${zoneCards(false)}
+  <div class="story" data-story>
+    <div class="story-figure">${puckFigure(pages.how.model.figureCaption, { id: 'story-puck' })}</div>
+    <ol class="story-steps">
+      ${zones
+        .map((z, i) => {
+          const target = z.target + (SHOW_V && z.validatedTarget ? ` ${z.validatedTarget}` : '');
+          return `<li class="zone-card zone-${i}" data-step="${i}">
+        <p class="zone-id">${esc(z.label)}</p>
+        <h3>${fmt(z.name)}</h3>
+        <p class="zone-plain">${fmt(z.plain)}</p>
+        <p class="zone-target">${fmt(target)}</p>
+      </li>`;
+        })
+        .join('')}
+    </ol>
+  </div>
   <div class="callout"${reveal()}>
     <h3>${fmt(p.positioning.title)}</h3>
     <p>${fmt(p.positioning.text)}</p>
@@ -188,24 +245,17 @@ ${section(
   'impact',
   `${head(p.impact, { id: 'impact-h', center: true })}
   ${iconCards(p.impact.items, 'cols-4')}
-  <ul class="goal-list">${p.impact.goals.map((g) => `<li>${icon('target')}<span>${fmt(g)}</span></li>`).join('')}</ul>`,
+  <ul class="goal-list">${p.impact.goals.map((x) => `<li>${icon('target')}<span>${fmt(x)}</span></li>`).join('')}</ul>`,
 )}
 
-${section(
-  'explore',
-  `${head(p.explore, { id: 'explore-h', center: true })}
-  <ul class="card-grid cols-5">
-    ${p.explore.cards
-      .map(
-        (c, i) => `<li class="card card-link"${reveal(i)}>
-      <span class="card-icon">${icon(c.icon)}</span>
-      <h3><a href="${pageHref(c.href)}">${fmt(c.title)}</a></h3>
-      <p>${fmt(c.text)}</p>
-    </li>`,
-      )
-      .join('')}
-  </ul>`,
-)}`;
+<section class="cta-band" aria-labelledby="cta-h">
+  <div class="cta-band-inner">
+    <h2 id="cta-h">${fmt(p.cta.title)}</h2>
+    <p>${fmt(p.cta.text)}</p>
+    <div class="actions">${btn(p.cta.primary, 'btn-light')}${btn(p.cta.secondary, 'btn-ghost-light')}</div>
+    <p class="cta-more"><span>${fmt(p.cta.moreLabel)}:</span> ${p.cta.more.map((m) => `<a href="${pageHref(m.href)}">${esc(m.label)}</a>`).join(' ')}</p>
+  </div>
+</section>`;
 }
 
 /* --------------------------------------------------------- HOW IT WORKS */

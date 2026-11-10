@@ -62,3 +62,42 @@ if (reduce || !('IntersectionObserver' in window)) {
   );
   items.forEach((el) => io.observe(el));
 }
+
+/* Scroll story (Home): the zone whose card is mid-screen lights up in the diagram */
+document.querySelectorAll('[data-story]').forEach((root) => {
+  const fig = root.querySelector('.puck-figure');
+  const steps = [...root.querySelectorAll('[data-step]')];
+  if (!fig || !('IntersectionObserver' in window)) return;
+  const storyIo = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((en) => {
+        if (!en.isIntersecting) return;
+        fig.dataset.active = en.target.dataset.step;
+        steps.forEach((s) => s.classList.toggle('active', s === en.target));
+      });
+    },
+    { rootMargin: '-45% 0px -45% 0px', threshold: 0 },
+  );
+  steps.forEach((s) => storyIo.observe(s));
+});
+
+/* 3D puck (Home): tilt with the pointer. Mouse only, and never when reduced motion is on. */
+const tilt = document.querySelector('[data-tilt]');
+if (tilt && !reduce && matchMedia('(hover: hover) and (pointer: fine)').matches) {
+  const area = tilt.closest('.hero') || tilt;
+  let frame = 0;
+  area.addEventListener('pointermove', (e) => {
+    cancelAnimationFrame(frame);
+    frame = requestAnimationFrame(() => {
+      const r = area.getBoundingClientRect();
+      const x = (e.clientX - r.left) / r.width - 0.5;
+      const y = (e.clientY - r.top) / r.height - 0.5;
+      tilt.style.setProperty('--tz', `${(x * 36).toFixed(1)}deg`);
+      tilt.style.setProperty('--tx', `${(-y * 14).toFixed(1)}deg`);
+    });
+  });
+  area.addEventListener('pointerleave', () => {
+    tilt.style.setProperty('--tz', '0deg');
+    tilt.style.setProperty('--tx', '0deg');
+  });
+}

@@ -221,47 +221,58 @@ export const pages = {
 
     hero: {
       eyebrow: '', // optional small line above the headline; empty = hidden
-      title: ['Arsenic and lead filtration,', 'built from ', 'coconut waste', '.'], // 3rd item is highlighted
-      sub: 'Coir-Shield is a low-cost, zero-electricity, gravity-fed household water filter puck, designed for the groundwater of the Indo-Gangetic Plain.',
+      // One entry per line of the headline (keep lines short). A leading * highlights that line.
+      title: ['You can’t', 'see it, smell', 'it or taste it.', '*It’s still there.'],
+      sub: 'Arsenic and lead in groundwater give no warning. Coir-Shield is a low-cost, zero-electricity filter puck made from coconut waste, designed to take them out.',
       primary: { label: 'See how it works', href: 'how-it-works' },
       secondary: { label: 'Check the evidence', href: 'evidence' },
-      figureCaption: 'Cross-section of the puck. Water moves down through three zones by gravity.',
+      note: 'Student prototype. Not yet certified.',
+      figureAlt: 'Three-dimensional view of the Coir-Shield puck, pulled apart into its three zones: iron guard on top, the arsenic zone in the middle and the lead zone at the bottom, with water dripping down through them.',
+      figureCaption: 'One puck, three zones. Move your pointer to tilt it.',
+    },
+
+    glasses: {
+      eyebrow: 'The problem',
+      title: 'Which glass is above the limit?',
+      text: 'One of these could hold arsenic above the WHO guideline of 10 µg/L ●. Nobody can tell which by looking. Arsenic and lead are invisible, odourless and tasteless, so families cannot tell their water is unsafe.',
+      alt: 'Illustration of two identical glasses of clear water, labelled A and B. They look exactly the same.',
+      labels: ['A', 'B'],
+      captions: ['Looks clear', 'Looks clear'],
+      note: 'Illustration, not a photograph of test samples.',
     },
 
     problem: {
-      eyebrow: 'The problem',
-      title: 'The water looks clean. The risk is invisible.',
+      title: 'How big is it?',
+      big: {
+        value: '46.5% ●',
+        text: 'of 4,780 ● tubewells surveyed across Ballia, Varanasi and Ghazipur exceeded 10 µg/L ● arsenic, and 10% ● exceeded 300 µg/L ●.',
+        source: '[[Chakraborti et al., Sci. Total Environ. 2006, doi:10.1016/j.scitotenv.2006.06.015|https://doi.org/10.1016/j.scitotenv.2006.06.015]]',
+      },
       paras: [
-        'Arsenic and lead are invisible, odourless and tasteless, so families cannot tell their water is unsafe.',
-        'Across the Indo-Gangetic Plain (IGP), many households drink groundwater from handpumps and borewells. Both metals are toxic when people drink them over years. The World Health Organization guideline for each is 10 µg/L ●, and both values are designated provisional.',
+        'Across the Indo-Gangetic Plain (IGP), many households drink groundwater from handpumps and borewells. Both metals are toxic when people drink them over years. The WHO guideline for each is 10 µg/L ●, and both values are designated provisional.',
         'Most filters that deal with these metals need electricity, plumbing or costly replacement parts. Households that depend on a handpump often have none of those.',
       ],
       facts: [
         {
-          label: 'Arsenic',
-          value: 'Arsenic above the permissible limit has been reported in isolated pockets of 230 ● districts across 25 ● states and UTs.',
+          label: 'India (arsenic)',
+          value: 'Reported above the permissible limit in isolated pockets of 230 ● districts across 25 ● states and UTs.',
           source: '[[Ministry of Jal Shakti, Rajya Sabha Starred Q. 136, 9 Dec 2024|https://rsdebate.nic.in/bitstream/123456789/751713/1/PQ_266_09122024_S136_p1_p5.pdf]]',
         },
         {
-          label: 'Uttar Pradesh',
+          label: 'Uttar Pradesh (arsenic)',
           value: 'In Uttar Pradesh alone, 29 ● districts.',
           source: '[[CGWB Annual Ground Water Quality Report 2024, via Toxics Link|https://toxicslink.org/?p=9236]]',
-        },
-        {
-          label: 'Lead (national context only)',
-          value: 'Lead has been found in groundwater in parts of 92 ● districts in 14 ● states.',
-          source: '[[Lok Sabha Starred Q. 407, 31 Mar 2022|https://eparlib.nic.in/bitstream/123456789/979283/1/AU4827.pdf]]',
-          note: 'Lead levels in the pilot block will be measured at our testing camps. ○',
-        },
-        {
-          label: 'Ballia and neighbouring districts (arsenic)',
-          value: 'In a survey of 4,780 ● tubewells across Ballia, Varanasi and Ghazipur, 46.5% ● exceeded 10 µg/L ● arsenic and 10% ● exceeded 300 µg/L ●.',
-          source: '[[Chakraborti et al., Sci. Total Environ. 2006, doi:10.1016/j.scitotenv.2006.06.015|https://doi.org/10.1016/j.scitotenv.2006.06.015]]',
         },
         {
           label: 'Ballia (arsenic)',
           value: 'A 2024 study of 195 ● samples from nine Ballia blocks found 32% ● above the WHO limit.',
           source: '[[Environmental Sustainability, doi:10.1007/s42398-024-00303-1|https://doi.org/10.1007/s42398-024-00303-1]]',
+        },
+        {
+          label: 'Lead (national context only)',
+          value: 'Found in groundwater in parts of 92 ● districts in 14 ● states.',
+          source: '[[Lok Sabha Starred Q. 407, 31 Mar 2022|https://eparlib.nic.in/bitstream/123456789/979283/1/AU4827.pdf]]',
+          note: 'Lead levels in the pilot block will be measured at our testing camps. ○',
         },
       ],
     },
@@ -269,7 +280,7 @@ export const pages = {
     solution: {
       eyebrow: 'The solution',
       title: 'One puck. Three zones. No electricity.',
-      lead: 'Water drips through the puck under its own weight. Each zone has one job. The order of the zones is the innovation, not any single reaction.',
+      lead: 'Water drips through the puck under its own weight. Scroll to follow it down. The order of the zones is the innovation, not any single reaction.',
       cta: { label: 'Open the full model', href: 'how-it-works' },
     },
 
@@ -309,15 +320,17 @@ export const pages = {
       ],
     },
 
-    explore: {
-      eyebrow: 'Explore',
-      title: 'Find what you came for',
-      cards: [
-        { href: 'how-it-works', icon: 'layers', title: 'How It Works', text: 'The filter, the puck in cross-section, the chemistry, and the life of one puck.' },
-        { href: 'customers', icon: 'home', title: 'For Customers', text: 'Step-by-step guides for households, SHG sellers and kirana refill points.' },
-        { href: 'evidence', icon: 'flask', title: 'Evidence', text: 'What is measured, the validation plan, and the standards we work to.' },
-        { href: 'business', icon: 'coin', title: 'Business & Impact', text: 'Testing camps, doorstep swaps, prices, unit economics and competition.' },
-        { href: 'team', icon: 'users', title: 'Team', text: 'Who we are, and our mission, vision and values.' },
+    // Closing band. The two buttons are the main routes; `more` links cover the remaining pages.
+    cta: {
+      title: 'Don’t take our word for it.',
+      text: 'Every number on this site is tagged as measured, cited or targeted. Start with the model, then check the evidence.',
+      primary: { label: 'How it works', href: 'how-it-works' },
+      secondary: { label: 'See the evidence', href: 'evidence' },
+      moreLabel: 'Also on this site',
+      more: [
+        { label: 'For Customers', href: 'customers' },
+        { label: 'Business & Impact', href: 'business' },
+        { label: 'Team', href: 'team' },
       ],
     },
   },

@@ -131,6 +131,27 @@ export function puckSvg(zones, t, { id = 'puck', compact = false } = {}) {
 </svg>`;
 }
 
+/* ----------------------------------------------------------- TWO GLASSES */
+/** Two identical glasses of clear water. g = pages.home.glasses */
+export function glassesSvg(g) {
+  const glass = (x, letter, caption) => `
+  <g transform="translate(${x} 0)">
+    <path d="M22 62 30 196q1 8 9 8h62q8 0 9-8l8-134Z" class="gl-water"/>
+    <path d="M22 62q48 10 96 0" class="gl-surface"/>
+    <path d="M18 24 30 196q1 8 9 8h62q8 0 9-8L122 24" class="gl-glass"/>
+    <path d="M36 80 42 176" class="gl-shine"/>
+    <circle cx="70" cy="126" r="19" class="gl-badge"/>
+    <text x="70" y="133" text-anchor="middle" class="gl-letter">${esc(letter)}</text>
+    <text x="70" y="232" text-anchor="middle" class="gl-caption">${esc(caption)}</text>
+  </g>`;
+  return `
+<svg class="glasses-svg" viewBox="0 0 360 244" role="img" aria-labelledby="gl-title">
+  <title id="gl-title">${esc(g.alt)}</title>
+  ${glass(30, g.labels[0], g.captions[0])}
+  ${glass(190, g.labels[1], g.captions[1])}
+</svg>`;
+}
+
 /* ------------------------------------------------------- FILTER HOUSING */
 /** Labelled cross-section of the two-chamber gravity filter. d = pages.how.device */
 export function housingSvg(d) {
