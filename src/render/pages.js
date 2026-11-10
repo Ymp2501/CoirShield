@@ -240,7 +240,9 @@ ${section(
       <div class="mini-grid">
         <div class="mini"><h3>${fmt(m.window.title)}</h3><p class="mini-value">${fmt(m.window.value)}</p><p>${fmt(m.window.text)}</p></div>
         <div class="mini"><h3>${fmt(m.capacity.title)}</h3><p class="mini-value">${fmt(m.capacity.value)}</p><p>${fmt(m.capacity.text)}</p></div>
-        <div class="mini mini-wide"><h3>${fmt(m.influent.title)}</h3><p>${fmt(m.influent.text)}</p><p class="fact-src">${fmt(m.influent.source)}</p></div>
+        <div class="mini mini-wide"><h3>${fmt(m.influent.title)}</h3><p>${fmt(m.influent.text)}</p>
+          <dl class="spec">${m.influent.rows.map((x) => `<div><dt>${fmt(x.label)}</dt><dd>${fmt(x.value)}</dd></div>`).join('')}</dl>
+          <p class="fact-src">${fmt(m.influent.source)}</p></div>
       </div>
     </div>
   </div>`,

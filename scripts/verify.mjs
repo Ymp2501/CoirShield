@@ -51,6 +51,7 @@ const ALLOW = [
   /\bTable [23]\b/g, // table names inside BIS IS 10500:2012
   /\bIS 10500(?::2012)?/g, // the standard's identifier
   /\bNSF\/ANSI 53\b/g, // another standard's identifier
+  /\bIS 3025 \(Part \d+\)/g, // test-method identifiers
   /\bESP32\b/g, // a part name
   /\bV[1-7]\b/g, // validation test labels
   /\b4th\b/g, // "4th edition" of the WHO guidelines

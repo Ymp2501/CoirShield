@@ -660,3 +660,11 @@ p.fact-src { margin-top: 10px !important; }
 .chart-unit .cost-total { font-size: 1.25rem; line-height: 1.4; }
 
 a.src { display: inline-block; padding: 4px 0; }
+
+.spec { margin-top: 12px; border-top: 1px solid var(--line); }
+.spec > div { display: grid; grid-template-columns: minmax(120px, 0.8fr) 1.2fr; gap: 12px; padding: 9px 0; border-bottom: 1px solid var(--line); }
+.spec dt { color: var(--muted); font-size: 0.95rem; }
+.spec dd { font-family: var(--font-mono); font-weight: 700; font-size: 0.95rem; }
+.mini .spec + .fact-src { color: var(--muted); }
+.seg-5 { background: #8a5fb5; }
+.seg-6 { background: #2f8f9d; }

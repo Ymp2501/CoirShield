@@ -109,7 +109,7 @@ export const charts = {
     yLabel: 'Outlet concentration',
     limit: { label: 'WHO guideline', value: 10, unit: 'µg/L', tag: '●' },
     target: { label: 'Design target', value: 450, unit: 'L', tag: '○', approx: true },
-    influent: '[TBD: influent arsenic and lead concentrations used in the test]',
+    influent: 'Planned influent: 50 µg/L ○ arsenic (standard tier), 300 µg/L ○ arsenic (high tier) and 150 µg/L ○ lead.',
     pendingLabel: 'No data yet',
     pendingNote: 'Schematic only. The dashed lines mark the guideline and our design target; no measured points exist yet.',
     preliminaryNote: 'Preliminary data. Not yet replicated.',
@@ -130,10 +130,12 @@ export const charts = {
       { label: 'Transport', value: 2, tag: '○' },
       { label: 'Kiln co-processing (not yet quoted)', value: 5, tag: '○' },
       { label: 'Re-test and refund reserve', value: 15, tag: '○' },
+      { label: 'SMS / missed-call swap reminder', value: 0.5, tag: '○' },
+      { label: 'Dated swap card and Hindi report-card printing', value: 1, tag: '○' },
       { label: 'Contribution', value: 19.65, tag: '○', highlight: true },
     ],
     // Shown when the items above do not add up to the price.
-    remainderLabel: '[TBD: the cost lines above leave ₹1.50 of the price unaccounted for — confirm the missing line]',
+    remainderLabel: '[TBD: the cost lines above do not add up to the price — confirm the missing line]',
     caption: 'Contribution is ₹19.65 ○ per ₹99 ○ puck, about 20% ○. Every figure here is an estimate, to be confirmed after final costing.',
     footnote: 'Bill of materials priced at industrial commodity rates. The prototype itself was built with retail-sourced material, which costs more.',
   },
@@ -248,7 +250,17 @@ export const pages = {
           label: 'Lead (national context only)',
           value: 'Lead has been found in groundwater in parts of 92 ● districts in 14 ● states.',
           source: '[[Lok Sabha Starred Q. 407, 31 Mar 2022|https://eparlib.nic.in/bitstream/123456789/979283/1/AU4827.pdf]]',
-          note: '[TBD: district-level lead source for the pilot district — needed before any lead claim there]',
+          note: 'Lead levels in the pilot block will be measured at our testing camps. ○',
+        },
+        {
+          label: 'Ballia and neighbouring districts (arsenic)',
+          value: 'In a survey of 4,780 ● tubewells across Ballia, Varanasi and Ghazipur, 46.5% ● exceeded 10 µg/L ● arsenic and 10% ● exceeded 300 µg/L ●.',
+          source: '[[Chakraborti et al., Sci. Total Environ. 2006, doi:10.1016/j.scitotenv.2006.06.015|https://doi.org/10.1016/j.scitotenv.2006.06.015]]',
+        },
+        {
+          label: 'Ballia (arsenic)',
+          value: 'A 2024 study of 195 ● samples from nine Ballia blocks found 32% ● above the WHO limit.',
+          source: '[[Environmental Sustainability, doi:10.1007/s42398-024-00303-1|https://doi.org/10.1007/s42398-024-00303-1]]',
         },
       ],
     },
@@ -273,7 +285,7 @@ export const pages = {
       cardStatus: 'Prototype stage',
       stats: [
         { value: '1.3 mmol/g ▲', label: 'Carboxylate sites on our citrate-coir. Literature benchmark: 1.0–1.2 mmol/g ● (Hoang et al. 2021).', validatedOnly: true },
-        { value: '~450 L ○', label: 'Design target per puck, to breakthrough at 10 µg/L ●. Not a measured capacity.' },
+        { value: '~450 L ○', label: 'Design target per puck, to 10 µg/L ● at 50 µg/L ○ arsenic influent. To be measured.' },
         { value: '30 days ○', label: 'Maximum replacement interval. Column breakthrough testing will set the real interval.' },
         { value: '₹99 ○', label: 'Target monthly price for a puck when the old one is returned.' },
       ],
@@ -357,12 +369,20 @@ export const pages = {
       capacity: {
         title: 'Design target',
         value: '~450 L ○',
-        text: '~450 L per puck ○ is the design target (15 L/day × 30 days ○), not a measured capacity. Column breakthrough tests decide it. 30 days ○ is the maximum; column breakthrough testing will set the real interval. One service-life model suggested arsenic capacity could run out in ~9 days ○ under its default inputs.',
+        text: '~450 L per puck ○ to 10 µg/L ● at 50 µg/L ○ arsenic influent; to be measured. 30 days ○ is the maximum; column breakthrough testing will set the real interval. One service-life model suggested arsenic capacity could run out in ~9 days ○ under its default inputs.',
       },
       influent: {
         title: 'Test water',
-        text: 'Influent concentration for testing: [TBD: influent arsenic and lead concentrations]. Under consideration: the NSF/ANSI 53 challenge levels, 0.050 mg/L ● arsenic and 0.15 mg/L ● lead.',
-        source: '[[WWD magazine, arsenic|https://www.wwdmag.com/arsenic]] · [[Pentek US-1000 manual, p. 7|https://www.manualslib.com/manual/499157/Pentek-Us-1000.html?page=7]]',
+        text: 'Planned influent for column tests ○. A design decision, based on Ballia data and the NSF/ANSI 53 challenge tiers.',
+        rows: [
+          { label: 'Arsenic, standard tier', value: '50 µg/L ○' },
+          { label: 'Arsenic, high tier', value: '300 µg/L ○ (~10% ● of Ballia tubewells exceed it)' },
+          { label: 'Lead', value: '150 µg/L ○' },
+          { label: 'Calcium', value: '70 mg/L ● (Ballia median, NIH Roorkee study)' },
+          { label: 'Iron (Fe²⁺)', value: '5 mg/L ○, as in test V6' },
+          { label: 'pH', value: '6.5 and 8.0 ○' },
+        ],
+        source: 'NSF/ANSI 53 tiers: [[WWD magazine, arsenic|https://www.wwdmag.com/arsenic]] · [[Pentek US-1000 manual, p. 7|https://www.manualslib.com/manual/499157/Pentek-Us-1000.html?page=7]]',
       },
     },
 
@@ -446,7 +466,7 @@ export const pages = {
         notes: [
           '**Planned guarantee ○** (only once laboratory and column tests exist): free re-test of your filtered water near the end of your first month. If a puck within its replacement date fails to bring arsenic below the limit, that month’s ₹99 ○ is refunded.',
           'Storage: keep new pucks sealed in their pouch, dry and out of direct sun.',
-          'Shelf life: being tested. [TBD: shelf life — needs a stability test]',
+          'Shelf life: being tested.',
           'Do not throw a used puck away or burn it. It holds the metals it has trapped. Always return it in the sealed bag.',
           'The puck is designed for arsenic and lead. It is not designed to remove germs or to soften hard water.',
         ],
@@ -461,7 +481,7 @@ export const pages = {
           { icon: 'home', title: 'Sell and deliver at the door', text: 'Bring the puck to the household, collect payment, and scan the QR code when you issue it.' },
           { icon: 'calendar', title: 'Swap every month', text: 'Return on the date printed on the swap card with a new puck.' },
           { icon: 'return', title: 'Collect the spent puck', text: 'Take the old puck in its sealed return bag on the same visit and scan its QR code. Do not open spent pucks.' },
-          { icon: 'box', title: 'Bring pucks to the aggregation point', text: 'Take collected pucks to the block or district aggregation point. Frequency: [TBD: collection frequency, to be agreed with the SHG federation].' },
+          { icon: 'box', title: 'Bring pucks to the aggregation point', text: 'Spent pucks are collected at the monthly doorstep swap and taken to the block aggregation point once a month. ○' },
         ],
         earnTitle: 'What you earn',
         earn: [
@@ -486,7 +506,7 @@ export const pages = {
           { icon: 'users', title: 'Hand over to the SHG', text: 'The SHG collector takes the bin’s contents to the aggregation point.' },
         ],
         earnTitle: 'What you earn',
-        earn: [{ title: 'Refill-point margin', price: '[TBD: kirana margin per refill]', note: 'To be agreed.' }],
+        earn: [{ title: 'Refill-point margin', price: '₹14.85 ○', note: '15% ○ of MRP on each ₹99 ○ puck, the same as SHG sellers.', good: true }],
         notesTitle: 'Good to know',
         notes: ['Used pucks stay sealed in the return bin until they are collected.'],
       },
@@ -536,7 +556,7 @@ export const pages = {
       eyebrow: 'Replacement interval',
       title: 'Monthly replacement is not yet proven',
       paras: [
-        '~450 L per puck ○ is the design target (15 L/day × 30 days ○), not a measured capacity.',
+        '~450 L per puck ○ to 10 µg/L ● at 50 µg/L ○ arsenic influent; to be measured. The target comes from 15 L/day × 30 days ○ of household use.',
         '30 days ○ is the maximum; column breakthrough testing will set the real interval.',
         'One service-life model suggested arsenic capacity could run out in ~9 days ○ under its default inputs. We show that number because it is the one that could change the product most.',
       ],
@@ -550,7 +570,7 @@ export const pages = {
         { icon: 'gauge', title: 'Dissolved oxygen (DO) sensor', text: 'Tracks oxygen in the test water. Oxygen affects how iron and arsenic behave, so we log it during runs.' },
         { icon: 'gauge', title: 'Oxidation-reduction potential (ORP) sensor', text: 'Shows whether the water is reducing or oxidising. IGP aquifers are reducing, which is why As(III) dominates there.' },
         { icon: 'flask', title: 'Silver nanoparticle check', text: 'Quality check by spectrophotometer: a surface plasmon resonance peak at 400–420 nm ●. Status: [TBD: has the check been done, and what was the result].' },
-        { icon: 'shield', title: 'Independent laboratory', text: 'Not yet tested by an independent lab. Planned before any field pilot.' },
+        { icon: 'shield', title: 'Independent laboratory', text: 'Not yet tested by an independent lab. To be tested at a NABL-accredited laboratory before any field pilot: arsenic by IS 3025 (Part 37), lead by IS 3025 (Part 47). Lab and date to be confirmed. ○' },
       ],
     },
 
@@ -565,7 +585,7 @@ export const pages = {
       rows: [
         ['V1 · Carboxyl density', 'NaOH back-titration', 'Benchmark 1.0–1.2 mmol/g ● (Hoang et al. 2021)', '@V1'],
         ['V2 · Oxidant capacity', 'Iodometric titration of Zone 1', 'To be set before the run', 'Planned ○'],
-        ['V3 · Anion capture', 'Phosphate as an arsenate stand-in, molybdenum blue read at 880 nm ●', '[TBD: pass mark — set it before running V3]', 'Planned ○'],
+        ['V3 · Anion capture', 'Phosphate as an arsenate stand-in, molybdenum blue read at 880 nm ●', 'Fe–Mn-loaded biochar must remove more phosphate than unloaded biochar at the same spike, with triplicate means ± SD not overlapping. The spike and acceptance threshold are fixed before the run. ○', 'Planned ○'],
         ['V4 · Lead uptake', 'Raw coir against treated coir against esterified coir', 'To be set before the run', 'Planned ○'],
         ['V5 · Silver release', 'Silver in the treated water', 'Below 0.1 mg/L ●', 'Planned ○'],
         ['V6 · Manganese release', 'With and without Zone 0, which targets ~98% ○ iron removal', 'Below 0.08 mg/L ● (WHO)', 'Planned ○'],
@@ -575,8 +595,8 @@ export const pages = {
         ['Column breakthrough', 'Litres treated before the outlet reaches 10 µg/L ●, across pH 6.5–8.0 ○', 'Target ~450 L ○', 'Planned ○'],
         ['Ester stability', 'Do the binding sites last for 30 days ○ in water', 'To be set before the run', 'Planned ○'],
         ['TCLP leaching', 'Do spent pucks hold on to their metals', 'To be set before the run', 'Planned ○'],
-        ['Independent lab verification', 'An accredited laboratory repeats key results', '[TBD: laboratory and method]', 'Planned before any field pilot'],
-        ['NGO field pilot', 'Real households, real water', '[TBD: partner NGO and SHG federation]', 'Planned ○'],
+        ['Independent lab verification', 'To be tested at a NABL-accredited laboratory: arsenic by IS 3025 (Part 37), lead by IS 3025 (Part 47).', 'Lab and date to be confirmed. ○', 'Planned before any field pilot'],
+        ['NGO field pilot', 'Real households, real water', 'In discussion: partner NGO and SHG federation (to be named).', 'Planned ○'],
       ],
     },
 
@@ -627,7 +647,7 @@ export const pages = {
         { label: 'Serviceable market (being re-verified)', value: '~12M ○ households' },
         { label: 'Obtainable market (being re-verified)', value: '~360,000 ○ households' },
         { label: 'Pilot location', value: 'An arsenic-hotspot block such as Ballia, UP, reached through an existing SHG federation and a partner NGO already testing water there.' },
-        { label: 'Partners', value: '[TBD: partner NGO and SHG federation, even if “in discussion”]' },
+        { label: 'Partners', value: 'In discussion: partner NGO and SHG federation (to be named).' },
       ],
     },
 
@@ -670,7 +690,7 @@ export const pages = {
       title: 'Costs: all estimates',
       paras: [
         'Puck materials cost about ₹38 ○. Silver is about ₹11 ○ of that at the target loading, or ₹14–28 ○ at the current bench loading.',
-        'Per puck we also pay about ₹17.85 ○ for the SHG margin and collection, about ₹2 ○ for transport, about ₹5 ○ for kiln co-processing (not yet quoted), and about ₹15 ○ for re-tests and refunds.',
+        'Per puck we also pay about ₹17.85 ○ for the SHG margin and collection, about ₹2 ○ for transport, about ₹5 ○ for kiln co-processing (not yet quoted), about ₹15 ○ for re-tests and refunds, ₹0.50 ○ for an SMS or missed-call swap reminder, and ₹1.00 ○ for the dated swap card and Hindi report-card printing.',
         'The filter unit costs ₹104–223 ○, one-time. [[B2B listings, Jun 2026]]',
       ],
       facts: [
@@ -719,7 +739,7 @@ export const pages = {
       items: [
         { icon: 'users', title: 'Social', text: 'Income for SHG women who sell, deliver and collect.' },
         { icon: 'leaf', title: 'Climate', text: 'No grid demand, and an agricultural-waste feedstock.' },
-        { icon: 'coin', title: 'Cost-effectiveness', text: '[TBD: cost per household per year — recompute with current costs before showing]' },
+        { icon: 'coin', title: 'Cost per household', text: '₹99 × 12 = ₹1,188 ○ a year for pucks, plus a one-time ₹104–223 ○ filter unit (CSR-funded in the pilot). That works out to ~₹0.22 ○ per litre at 450 L ○ per puck.' },
       ],
     },
 
