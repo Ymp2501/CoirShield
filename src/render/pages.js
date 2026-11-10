@@ -131,7 +131,7 @@ function home() {
 <div class="hero-band${site.darkHero ? ' theme-dark' : ''}">
 <section class="hero" aria-labelledby="page-h">
   <div class="hero-copy">
-    <p class="eyebrow">${fmt(p.hero.eyebrow)}</p>
+    ${p.hero.eyebrow ? `<p class="eyebrow">${fmt(p.hero.eyebrow)}</p>` : ''}
     <h1 id="page-h">${esc(t1)} ${esc(t2)}<em>${esc(hi)}</em>${esc(t3)}</h1>
     <p class="hero-sub">${fmt(p.hero.sub)}</p>
     <p class="hero-tagline">${fmt(site.taglineHi)}</p>

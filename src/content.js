@@ -220,7 +220,7 @@ export const pages = {
     description: 'Coir-Shield is a low-cost, zero-electricity, gravity-fed household water filter puck made from coconut waste, designed for arsenic and lead in Indo-Gangetic Plain groundwater. Student prototype, not yet certified.',
 
     hero: {
-      eyebrow: 'Conrad Challenge 2026-27 · The Water Challenge',
+      eyebrow: '', // optional small line above the headline; empty = hidden
       title: ['Arsenic and lead filtration,', 'built from ', 'coconut waste', '.'], // 3rd item is highlighted
       sub: 'Coir-Shield is a low-cost, zero-electricity, gravity-fed household water filter puck, designed for the groundwater of the Indo-Gangetic Plain.',
       primary: { label: 'See how it works', href: 'how-it-works' },
