@@ -93,7 +93,7 @@ const timeline = (steps) => `
 </ol>`;
 
 const puckFigure = (caption, opts) => `
-<figure class="puck-figure panel-dark">
+<figure class="puck-figure">
   ${puckSvg(zones, pages.how.svg, opts)}
   <figcaption>${fmt(caption)}</figcaption>
 </figure>`;
@@ -208,7 +208,7 @@ ${section(
   'lifecycle',
   `${head(p.lifecycle, { id: 'lifecycle-h', center: true })}
   <div class="loop-grid">
-    <figure class="loop-figure panel-dark"${reveal()}>${lifecycleSvg(lifecycle)}</figure>
+    <figure class="loop-figure"${reveal()}>${lifecycleSvg(lifecycle)}</figure>
     ${timeline(lifecycle.steps)}
   </div>`,
 )}
@@ -430,10 +430,10 @@ ${section(
 }
 
 export const PAGE_MAP = {
-  index: { data: pages.home, render: home, bodyClass: 'theme-dark page-home' },
-  'how-it-works': { data: pages.how, render: how, bodyClass: 'theme-dark' },
-  customers: { data: pages.customers, render: customers, bodyClass: 'theme-light' },
-  evidence: { data: pages.evidence, render: evidence, bodyClass: 'theme-dark' },
-  business: { data: pages.business, render: business, bodyClass: 'theme-dark' },
-  team: { data: pages.team, render: team, bodyClass: 'theme-dark' },
+  index: { data: pages.home, render: home, bodyClass: `theme-${site.theme === 'dark' ? 'dark' : 'light'}` },
+  'how-it-works': { data: pages.how, render: how, bodyClass: `theme-${site.theme === 'dark' ? 'dark' : 'light'}` },
+  customers: { data: pages.customers, render: customers, bodyClass: `theme-${site.theme === 'dark' ? 'dark' : 'light'}` },
+  evidence: { data: pages.evidence, render: evidence, bodyClass: `theme-${site.theme === 'dark' ? 'dark' : 'light'}` },
+  business: { data: pages.business, render: business, bodyClass: `theme-${site.theme === 'dark' ? 'dark' : 'light'}` },
+  team: { data: pages.team, render: team, bodyClass: `theme-${site.theme === 'dark' ? 'dark' : 'light'}` },
 };

@@ -11,7 +11,7 @@ export function renderHead(page) {
     `<title>${esc(page.title)}</title>`,
     `<meta name="description" content="${esc(page.description)}">`,
     site.noindex ? '<meta name="robots" content="noindex">' : '',
-    '<meta name="theme-color" content="#0a0e14">',
+    `<meta name="theme-color" content="${site.theme === 'dark' ? '#0a0e14' : '#f6f3ec'}">`,
     '<link rel="icon" href="./favicon.svg" type="image/svg+xml">',
     '<link rel="preconnect" href="https://fonts.googleapis.com">',
     '<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>',

@@ -26,6 +26,9 @@ export const site = {
   // false -> pages may be indexed
   noindex: true,
 
+  // Colour scheme for the whole site: 'light' or 'dark'. (A build setting, not a visitor toggle.)
+  theme: 'light',
+
   contactEmail: '[TBD: team contact email]',
 
   nav: [

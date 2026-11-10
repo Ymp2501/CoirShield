@@ -1,34 +1,11 @@
 /* ==========================================================================
    Coir-Shield — brand system (see BRAND.md)
    Syne = headings · Space Mono = data, labels, tags · Inter = body
-   Primary scheme: teal #4fc3a1 on near-black #0a0e14. Light scheme for customer pages.
+   Site scheme is chosen by `site.theme` in src/content.js: 'light' (default) or 'dark'.
+   Brand teal #4fc3a1; near-black #0a0e14.
    ========================================================================== */
 
 :root,
-.theme-dark,
-.panel-dark {
-  --bg: #0a0e14;
-  --bg-2: #0f151d;
-  --surface: #121a24;
-  --surface-2: #17212d;
-  --ink: #eef3f6;
-  --muted: #a9b7c3;
-  --line: rgba(150, 200, 190, 0.18);
-  --line-strong: rgba(150, 200, 190, 0.34);
-  --accent: #4fc3a1;
-  --accent-2: #36a688;
-  --accent-text: #4fc3a1;
-  --accent-ink: #04231a;
-  --prov-v: #4fc3a1;
-  --prov-l: #9cc0ff;
-  --prov-t: #f2c14e;
-  --tbd-bg: rgba(242, 193, 78, 0.13);
-  --tbd-ink: #f6d58a;
-  --tbd-line: rgba(242, 193, 78, 0.55);
-  --warn-bg: rgba(242, 193, 78, 0.08);
-  --shadow: 0 30px 70px -34px rgba(0, 0, 0, 0.8);
-}
-
 .theme-light {
   --bg: #f6f3ec;
   --bg-2: #efeade;
@@ -38,6 +15,7 @@
   --muted: #44545e;
   --line: rgba(16, 32, 42, 0.14);
   --line-strong: rgba(16, 32, 42, 0.3);
+  --brand: #4fc3a1; /* brand teal, for fills and decoration (too pale for text on light) */
   --accent: #0b6b55;
   --accent-2: #09594a;
   --accent-text: #0b6b55;
@@ -50,6 +28,57 @@
   --tbd-line: #a8791a;
   --warn-bg: #fff6dc;
   --shadow: 0 24px 50px -30px rgba(16, 32, 42, 0.35);
+  --glow: rgba(79, 195, 161, 0.22);
+  /* diagrams */
+  --fig-bg: linear-gradient(180deg, #ffffff, #f7f3ea);
+  --fig-halo: #fbf9f4;
+  --fig-divider: #ffffff;
+  --z0-bg: #f3dcc6;
+  --z0-tex: #b9713a;
+  --z1-bg: #2c343d;
+  --z1-tex: #66727f;
+  --z2-bg: #ecdcb8;
+  --z2-tex: #a2783a;
+  --label-bg: rgba(255, 255, 255, 0.94);
+  --chip-ink: #10202a;
+  --water: #1479b8;
+}
+
+.theme-dark {
+  --bg: #0a0e14;
+  --bg-2: #0f151d;
+  --surface: #121a24;
+  --surface-2: #17212d;
+  --ink: #eef3f6;
+  --muted: #a9b7c3;
+  --line: rgba(150, 200, 190, 0.18);
+  --line-strong: rgba(150, 200, 190, 0.34);
+  --brand: #4fc3a1;
+  --accent: #4fc3a1;
+  --accent-2: #36a688;
+  --accent-text: #4fc3a1;
+  --accent-ink: #04231a;
+  --prov-v: #4fc3a1;
+  --prov-l: #9cc0ff;
+  --prov-t: #f2c14e;
+  --tbd-bg: rgba(242, 193, 78, 0.13);
+  --tbd-ink: #f6d58a;
+  --tbd-line: rgba(242, 193, 78, 0.55);
+  --warn-bg: rgba(242, 193, 78, 0.08);
+  --shadow: 0 30px 70px -34px rgba(0, 0, 0, 0.8);
+  --glow: rgba(79, 195, 161, 0.13);
+  --fig-bg: linear-gradient(180deg, #111a25, #0b1118);
+  --fig-halo: #0b1118;
+  --fig-divider: #0a0e14;
+  --z0-bg: #3a2a1c;
+  --z0-tex: #b9713a;
+  --z1-bg: #161c24;
+  --z1-tex: #4b5866;
+  --z2-bg: #37301f;
+  --z2-tex: #c9a063;
+  --label-bg: rgba(10, 14, 20, 0.86);
+  --chip-ink: #0a0e14;
+  --water: var(--water);
 }
 
 :root {
@@ -80,12 +109,11 @@ body {
   -webkit-font-smoothing: antialiased;
   overflow-x: hidden;
 }
+.theme-light,
 .theme-dark {
   background:
-    radial-gradient(900px 520px at 85% -8%, rgba(79, 195, 161, 0.13), transparent 62%),
-    radial-gradient(700px 480px at -10% 30%, rgba(58, 108, 180, 0.1), transparent 60%),
+    radial-gradient(900px 520px at 88% -10%, var(--glow), transparent 62%),
     var(--bg);
-  background-attachment: scroll;
 }
 img, svg { max-width: 100%; }
 a { color: var(--accent-text); text-underline-offset: 3px; }
@@ -215,7 +243,7 @@ mark.tbd {
 }
 .hero h1 em {
   font-style: normal; color: var(--accent-text);
-  background: linear-gradient(180deg, #7fe0c3, var(--accent)); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+  text-decoration: underline; text-decoration-color: var(--brand); text-decoration-thickness: 0.12em; text-underline-offset: 0.12em;
 }
 .hero-sub { margin-top: 22px; font-size: clamp(1.08rem, 1.6vw, 1.25rem); color: var(--muted); max-width: 56ch; }
 .page-hero { max-width: var(--maxw); margin: 0 auto; padding: clamp(44px, 7vw, 92px) 20px clamp(28px, 4vw, 48px); }
@@ -233,38 +261,37 @@ mark.tbd {
 .disclaimer .icon { flex: none; color: var(--prov-t); margin-top: 1px; }
 
 /* -------------------------------------------------------- figures (dark) */
-.panel-dark { color: var(--ink); }
 .puck-figure, .loop-figure {
-  background: linear-gradient(180deg, #111a25, #0b1118); border: 1px solid var(--line-strong);
+  background: var(--fig-bg); border: 1px solid var(--line-strong);
   border-radius: var(--radius-lg); padding: 18px 14px 14px; box-shadow: var(--shadow); text-align: center;
 }
 .puck-figure figcaption { font-size: 0.88rem; color: var(--muted); margin-top: 8px; padding: 0 8px; }
 .puck-svg { display: block; width: 100%; height: auto; max-height: 620px; margin: 0 auto; }
 .puck-svg text { font-family: var(--font-mono); fill: var(--ink); }
 .pk-io { font-size: 13px; font-weight: 700; letter-spacing: 0.04em; }
-.pk-shell { fill: none; stroke: var(--accent); stroke-width: 3; }
-.pk-divider { stroke: var(--bg); stroke-width: 4; }
-.pk-zone-0 .pk-zone-bg { fill: #3a2a1c; }
-.pk-zone-1 .pk-zone-bg { fill: #161c24; }
-.pk-zone-2 .pk-zone-bg { fill: #37301f; }
-.pk-tex-0 { fill: #b9713a; opacity: 0.55; }
-.pk-tex-1 { fill: #4b5866; opacity: 0.7; }
-.pk-tex-2 { fill: none; stroke: #c9a063; stroke-width: 1.6; opacity: 0.55; }
-.pk-label-bg { fill: rgba(10, 14, 20, 0.86); }
-.pk-zone-id { font-size: 13px; font-weight: 700; fill: var(--accent); letter-spacing: 0.08em; }
-.puck-svg .pk-zone-name { font-size: 12px; fill: #dfe7ec; }
-.puck-svg .pk-stop { font-size: 11px; fill: #eef3f6; paint-order: stroke; stroke: #0a0e14; stroke-width: 4px; stroke-linejoin: round; }
-.pk-chip circle { stroke: #0a0e14; stroke-width: 2; }
-.pk-chip text { font-size: 11px; font-weight: 700; fill: #0a0e14; }
+.pk-shell { fill: none; stroke: var(--brand); stroke-width: 4; }
+.pk-divider { stroke: var(--fig-divider); stroke-width: 4; }
+.pk-zone-0 .pk-zone-bg { fill: var(--z0-bg); }
+.pk-zone-1 .pk-zone-bg { fill: var(--z1-bg); }
+.pk-zone-2 .pk-zone-bg { fill: var(--z2-bg); }
+.pk-tex-0 { fill: var(--z0-tex); opacity: 0.55; }
+.pk-tex-1 { fill: var(--z1-tex); opacity: 0.7; }
+.pk-tex-2 { fill: none; stroke: var(--z2-tex); stroke-width: 1.6; opacity: 0.6; }
+.pk-label-bg { fill: var(--label-bg); }
+.puck-svg .pk-zone-id { font-size: 13px; font-weight: 700; fill: var(--accent-text); letter-spacing: 0.08em; }
+.puck-svg .pk-zone-name { font-size: 12px; fill: var(--ink); }
+.puck-svg .pk-stop { font-size: 11px; font-weight: 700; fill: var(--ink); paint-order: stroke; stroke: var(--fig-halo); stroke-width: 5px; stroke-linejoin: round; }
+.pk-chip circle { stroke: var(--chip-ink); stroke-width: 2; }
+.puck-svg .pk-chip text { font-size: 11px; font-weight: 700; fill: var(--chip-ink); }
 .pk-chip-0 circle { fill: #e39a5c; }
 .pk-chip-1 circle { fill: #f2c14e; }
 .pk-chip-2 circle { fill: #9cc0ff; }
-.pk-flow { fill: none; stroke: #7fd6ff; stroke-width: 2.5; stroke-dasharray: 3 9; stroke-linecap: round; }
-.pk-arrowhead { fill: #7fd6ff; }
-.pk-drop { fill: #7fd6ff; opacity: 0; animation: pk-fall 4.2s linear infinite; }
+.pk-flow { fill: none; stroke: var(--water); stroke-width: 2.5; stroke-dasharray: 3 9; stroke-linecap: round; }
+.pk-arrowhead { fill: var(--water); }
+.pk-drop { fill: var(--water); opacity: 0; animation: pk-fall 4.2s linear infinite; }
 .pk-drop.d2 { animation-delay: 1.4s; }
 .pk-drop.d3 { animation-delay: 2.8s; }
-.pk-outdrop { fill: #7fd6ff; }
+.pk-outdrop { fill: var(--water); }
 @keyframes pk-fall {
   0% { transform: translateY(0); opacity: 0; }
   8% { opacity: 1; }
@@ -276,9 +303,9 @@ mark.tbd {
 .lifecycle-svg { display: block; width: 100%; height: auto; max-width: 460px; margin: 0 auto; }
 .lc-ring { fill: none; stroke: var(--line-strong); stroke-width: 2; stroke-dasharray: 4 7; }
 .lc-head { fill: var(--accent); }
-.lc-node circle { fill: #121a24; stroke: var(--accent); stroke-width: 2; }
+.lc-node circle { fill: var(--surface); stroke: var(--accent); stroke-width: 2; }
 .lc-icon { fill: none; stroke: var(--accent); stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
-.lc-node text { font-family: var(--font-mono); font-size: 14px; font-weight: 700; fill: var(--ink); paint-order: stroke; stroke: #0b1118; stroke-width: 5px; stroke-linejoin: round; }
+.lc-node text { font-family: var(--font-mono); font-size: 14px; font-weight: 700; fill: var(--ink); paint-order: stroke; stroke: var(--fig-halo); stroke-width: 5px; stroke-linejoin: round; }
 .lc-centre { font-family: var(--font-head); font-size: 20px; font-weight: 800; fill: var(--ink); }
 
 /* ---------------------------------------------------------------- cards */
@@ -422,7 +449,7 @@ mark.tbd {
 .bar-label { font-size: 0.92rem; color: var(--muted); margin-bottom: 6px; }
 .bar-track { position: relative; height: 26px; background: var(--bg-2); border: 1px solid var(--line); border-radius: 8px; overflow: hidden; }
 .bar-fill { position: absolute; top: 0; bottom: 0; left: 0; }
-.bar-measured { background: linear-gradient(90deg, var(--accent-2), var(--accent)); }
+.bar-measured { background: linear-gradient(90deg, var(--accent), var(--brand)); }
 .bar-range { background: repeating-linear-gradient(135deg, var(--prov-l) 0 6px, color-mix(in srgb, var(--prov-l) 55%, transparent) 6px 12px); }
 .bar-ghost { position: absolute; top: 50%; left: 0; height: 2px; background: color-mix(in srgb, var(--prov-l) 55%, transparent); }
 .bar-value { font-family: var(--font-mono); font-weight: 700; margin-top: 6px; }

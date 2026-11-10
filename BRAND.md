@@ -27,30 +27,37 @@ Keep clear space around the lockup equal to the height of one band group. Do not
 
 ## Colour
 
-Primary (dark) scheme, used on every page except For Customers:
+The site uses the **light scheme** on every page. The scheme is set by one line in `src/content.js`:
+`theme: 'light'` (change to `'dark'` for teal on near-black, to match the deck). It is a build setting, not a visitor toggle.
 
-| Token | Value | Use |
-| --- | --- | --- |
-| Background | `#0a0e14` | Page |
-| Surface | `#121a24` | Cards |
-| Ink | `#eef3f6` | Text |
-| Muted | `#a9b7c3` | Secondary text |
-| Teal | `#4fc3a1` | Accent, links, validated ▲ |
-| Blue | `#9cc0ff` | Literature ● |
-| Amber | `#f2c14e` | Target ○, placeholders, warnings |
-
-Light scheme, used on For Customers for readability in daylight:
+Light scheme (current):
 
 | Token | Value | Use |
 | --- | --- | --- |
 | Background | `#f6f3ec` | Page |
 | Surface | `#ffffff` | Cards |
 | Ink | `#10202a` | Text |
-| Deep teal | `#0b6b55` | Accent and buttons (the brand teal is too pale for text on a light page) |
+| Muted | `#44545e` | Secondary text |
+| Brand teal | `#4fc3a1` | Fills and decoration only: puck outline, chart bar, heading underline, page glow |
+| Deep teal | `#0b6b55` | Links, buttons, labels, validated ▲ (the brand teal is too pale for text on a light page) |
+| Blue | `#1f4fa3` | Literature ● |
+| Amber-brown | `#7d5200` | Target ○, status pills |
+| Placeholder | `#fff0c2` | [TBD] highlights and warnings |
 
-The light values are our best match to the poster. If the poster uses different exact values, change the `.theme-light` block at the top of `src/styles.css`.
+Dark scheme (available, matches the deck):
 
-Diagrams always sit on a dark panel, in both schemes, so the model looks the same everywhere.
+| Token | Value | Use |
+| --- | --- | --- |
+| Background | `#0a0e14` | Page |
+| Surface | `#121a24` | Cards |
+| Ink | `#eef3f6` | Text |
+| Teal | `#4fc3a1` | Accent, links, validated ▲ |
+| Blue | `#9cc0ff` | Literature ● |
+| Amber | `#f2c14e` | Target ○, placeholders, warnings |
+
+The light values are our best match to the poster. If the poster uses different exact values, change the first token block at the top of `src/styles.css`.
+
+Diagrams follow the page scheme. The biochar zone stays dark in both, because biochar is black.
 
 ## Provenance marks
 
