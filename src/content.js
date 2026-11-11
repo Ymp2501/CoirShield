@@ -153,6 +153,7 @@ export const zones = [
     label: 'Zone 0',
     name: 'Iron pre-removal',
     short: 'Iron guard',
+    stops: 'Stops iron', // label on the 3D puck
     plain: 'Takes dissolved iron out of the water first, so it cannot use up the arsenic chemistry in the next zone.',
     target: 'Design target: remove ~98% ○ of dissolved iron (Fe²⁺) before the water reaches Zone 1. Iron removal protects the arsenic zone; we do not claim it as a health benefit.',
     chemistryTitle: 'The chemistry',
@@ -167,6 +168,7 @@ export const zones = [
     label: 'Zone 1',
     name: 'Fe-Mn coconut-shell biochar',
     short: 'Arsenic zone',
+    stops: 'Oxidises and holds arsenic', // label on the 3D puck
     plain: 'Changes arsenic into a form that sticks, then holds on to it, all on one surface.',
     target: 'Target contaminant: arsenic. This is the only zone designed to capture arsenic.',
     chemistryTitle: 'The chemistry',
@@ -181,6 +183,7 @@ export const zones = [
     label: 'Zone 2',
     name: 'Citrate-coir with silver',
     short: 'Lead zone',
+    stops: 'Captures lead', // label on the 3D puck
     plain: 'Coconut fibre with negatively charged sites captures lead last, and mops up any manganese released upstream. A little silver stops slime growing inside the puck.',
     target: 'Target contaminant: lead (Pb²⁺).',
     validatedTarget: 'Measured site density: 1.3 mmol/g ▲.',
@@ -229,7 +232,10 @@ export const pages = {
       secondary: { label: 'Check the evidence', href: 'evidence' },
       note: 'Student prototype. Not yet certified.',
       figureAlt: 'Three-dimensional view of the Coir-Shield puck, pulled apart into its three zones: iron guard on top, the arsenic zone in the middle and the lead zone at the bottom, with water dripping down through them.',
-      figureCaption: 'One puck, three zones. Move your pointer to tilt it.',
+      figureCaption: 'One puck, pulled apart. Pick a zone to see its job. Move your pointer to tilt it.',
+      inLabel: 'Raw water in',
+      outLabel: 'Filtered water out',
+      meshLabel: 'Separator mesh',
     },
 
     glasses: {

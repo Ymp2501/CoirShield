@@ -679,33 +679,90 @@ a.src { display: inline-block; padding: 4px 0; }
 .proto-chip { display: inline-flex; align-items: center; gap: 8px; margin-top: 22px; padding: 7px 14px; border: 1px solid var(--tbd-line); border-radius: 999px; background: var(--warn-bg); font-size: 0.92rem; font-weight: 600; }
 .proto-chip .icon { width: 18px; height: 18px; color: var(--prov-t); }
 
-/* ---- 3D puck: stacks of thin discs in CSS 3D space ---- */
+/* ---- 3D exploded puck: stacks of thin discs in CSS 3D space ---- */
 .puck3d-figure { margin: 0; text-align: center; }
-.puck3d-figure figcaption { color: var(--muted); font-size: 0.9rem; margin-top: 10px; }
-.puck3d { --d: clamp(170px, 50vw, 250px); position: relative; height: calc(var(--d) * 2.25); display: grid; place-items: center; perspective: 1400px; overflow: hidden; }
-.p3-scene { position: relative; width: var(--d); height: var(--d); transform-style: preserve-3d; transform: rotateX(calc(62deg + var(--tx, 0deg))) rotateZ(calc(-12deg + var(--tz, 0deg))); transition: transform 0.35s ease-out; }
-.p3-layer { position: absolute; inset: 0; transform-style: preserve-3d; transform: translateZ(var(--z)); animation: p3-float 6s ease-in-out infinite; }
+.puck3d { --d: clamp(150px, 44vw, 230px); --rx: 62deg; --rz: -12deg; position: relative; height: calc(var(--d) * 2.95); display: grid; place-items: center; perspective: 1500px; overflow: hidden; }
+.p3-scene { position: relative; width: var(--d); height: var(--d); transform-style: preserve-3d; transform: rotateX(calc(var(--rx) + var(--tx, 0deg))) rotateZ(calc(var(--rz) + var(--tz, 0deg))); transition: transform 0.35s ease-out; }
+/* anything that should face the viewer undoes the scene rotation */
+.p3-tag, .p3-io, .p3-chip, .p3-drop, .p3-clean { --face: rotateZ(calc(0deg - var(--rz) - var(--tz, 0deg))) rotateX(calc(0deg - var(--rx) - var(--tx, 0deg))); }
+
+.p3-layer { position: absolute; inset: 0; transform-style: preserve-3d; transform: translateZ(calc(var(--z) + var(--lift, 0px))); animation: p3-float 6s ease-in-out infinite; transition: --lift 0.3s; }
 .p3-layer i { position: absolute; inset: 0; border-radius: 50%; transform: translateZ(calc(var(--k) * 2px)); background: var(--side); }
-.p3-layer i:last-child { background: var(--top); box-shadow: inset 0 0 0 2px var(--rim); }
-.p3-z0 { --z: calc(var(--d) * 0.6); --side: linear-gradient(90deg, #7c4d24, #c98a4b 38%, #8a5629); --top: radial-gradient(circle at 34% 30%, #edb57c, #b9713a 70%); --rim: #f3c79a; animation-delay: -4s; }
-.p3-z1 { --z: 0px; --side: linear-gradient(90deg, #12171d, #3a444f 38%, #171d24); --top: radial-gradient(circle at 34% 30%, #5d6976, #232a32 72%); --rim: #7b8794; animation-delay: -2s; }
-.p3-z2 { --z: calc(var(--d) * -0.6); --side: linear-gradient(90deg, #8a6a2c, #d9b877 38%, #94722f); --top: repeating-radial-gradient(circle at 50% 50%, #ead29b 0 5px, #cfae6b 5px 10px); --rim: #f1dca8; }
-@keyframes p3-float { 0%, 100% { transform: translateZ(var(--z)); } 50% { transform: translateZ(calc(var(--z) + 9px)); } }
-.p3-shadow { position: absolute; inset: -6%; border-radius: 50%; transform: translateZ(calc(var(--d) * -0.9)); background: radial-gradient(closest-side, rgba(79, 195, 161, 0.42), rgba(79, 195, 161, 0) 72%); }
-.p3-drop { position: absolute; left: 50%; top: 50%; width: 9px; height: 13px; margin: -6px 0 0 -4px; border-radius: 50% 50% 50% 50% / 62% 62% 38% 38%; background: var(--water); opacity: 0; animation: p3-drop 3.3s linear infinite; }
+.p3-layer i:nth-of-type(4n + 2) { background: var(--side-2); }
+.p3-layer i:first-of-type { box-shadow: 0 0 22px 2px var(--glow-c, transparent); }
+.p3-face { position: absolute; inset: 0; border-radius: 50%; transform: translateZ(32px); background: var(--top); box-shadow: inset 0 0 0 2px var(--rim), inset 0 0 26px rgba(0, 0, 0, 0.28); }
+@keyframes p3-float { 0%, 100% { transform: translateZ(calc(var(--z) + var(--lift, 0px))); } 50% { transform: translateZ(calc(var(--z) + var(--lift, 0px) + 8px)); } }
+
+.p3-z0 { --z: calc(var(--d) * 0.72); animation-delay: -4s;
+  --side: linear-gradient(90deg, #6f431f, #c98a4b 36%, #7f4e24); --side-2: linear-gradient(90deg, #7d4d25, #dba064 36%, #8d5a2c); --rim: #f3c79a;
+  --top: radial-gradient(circle, rgba(92, 48, 16, 0.6) 1.6px, transparent 2.2px) 0 0 / 13px 13px, radial-gradient(circle, rgba(255, 226, 190, 0.55) 1.3px, transparent 1.9px) 6px 7px / 17px 17px, radial-gradient(circle at 34% 28%, #efb87f, #b56c34 72%); }
+.p3-z1 { --z: 0px; animation-delay: -2s;
+  --side: linear-gradient(90deg, #0f1318, #38424d 36%, #141a20); --side-2: linear-gradient(90deg, #171c22, #47525e 36%, #1b2229); --rim: #7b8794;
+  --top: radial-gradient(circle, rgba(226, 143, 82, 0.9) 1.5px, transparent 2.1px) 4px 9px / 31px 31px, radial-gradient(circle, rgba(79, 195, 161, 0.85) 1.4px, transparent 2px) 17px 3px / 37px 37px, radial-gradient(circle, rgba(140, 152, 165, 0.6) 1.8px, transparent 2.5px) 0 0 / 11px 11px, radial-gradient(circle at 34% 28%, #56616d, #1d232a 72%); }
+.p3-z2 { --z: calc(var(--d) * -0.72);
+  --side: linear-gradient(90deg, #7f6026, #d9b877 36%, #8c6a2a); --side-2: linear-gradient(90deg, #8f6e2f, #e8cb8f 36%, #9c7833); --rim: #f1dca8;
+  --top: radial-gradient(circle, #ffffff 1.3px, rgba(255, 255, 255, 0) 2px) 5px 5px / 27px 27px, repeating-radial-gradient(circle at 50% 50%, #ecd6a2 0 4px, #c9a660 4px 8px); }
+
+/* perforated separators between the zones */
+.p3-mesh { position: absolute; inset: 5%; border-radius: 50%; border: 2px solid rgba(79, 195, 161, 0.9); background: radial-gradient(circle, rgba(79, 195, 161, 0.75) 1.2px, transparent 1.9px) 0 0 / 9px 9px; opacity: 0.55; }
+.p3-m1 { transform: translateZ(calc(var(--d) * 0.42)); }
+.p3-m2 { transform: translateZ(calc(var(--d) * -0.3)); }
+
+/* water arriving on the top face */
+.p3-ripple { position: absolute; inset: 30%; border-radius: 50%; border: 2px solid var(--water); transform: translateZ(calc(var(--d) * 0.72 + 34px)); opacity: 0; animation: p3-ripple 3.3s ease-out infinite; }
+@keyframes p3-ripple { 0% { transform: translateZ(calc(var(--d) * 0.72 + 34px)) scale(0.2); opacity: 0.9; } 100% { transform: translateZ(calc(var(--d) * 0.72 + 34px)) scale(1.7); opacity: 0; } }
+
+.p3-shadow { position: absolute; inset: -8%; border-radius: 50%; transform: translateZ(calc(var(--d) * -1.2)); background: radial-gradient(closest-side, rgba(79, 195, 161, 0.45), rgba(79, 195, 161, 0) 72%); }
+
+/* labels that face the viewer */
+.p3-tag { position: absolute; left: 100%; top: 50%; width: max-content; text-align: left; padding-left: 34px; transform: translate3d(6px, -50%, 16px) var(--face); transform-origin: 0 50%; font-family: var(--font-mono); line-height: 1.3; display: none; }
+.p3-tag::before { content: ''; position: absolute; left: 0; top: 50%; width: 26px; height: 2px; background: var(--rim); }
+.p3-tag b { display: block; font-size: 0.78rem; letter-spacing: 0.1em; color: var(--accent-text); }
+.p3-tag em { display: block; font-style: normal; font-weight: 700; font-size: 0.95rem; color: var(--ink); }
+.p3-tag small { display: block; font-size: 0.78rem; color: var(--muted); max-width: 17ch; white-space: normal; }
+.p3-io { position: absolute; left: 50%; top: 50%; width: max-content; font: 700 0.74rem var(--font-mono); letter-spacing: 0.08em; text-transform: uppercase; color: var(--water); }
+.p3-in { transform: translate3d(-50%, -50%, calc(var(--d) * 1.3)) var(--face); }
+.p3-out { transform: translate3d(-50%, -50%, calc(var(--d) * -1.34)) var(--face); }
+@media (min-width: 1000px) {
+  .puck3d { justify-items: start; padding-left: clamp(0px, 2vw, 30px); }
+  .p3-tag { display: block; }
+}
+
+/* contaminants: each one falls until it reaches the zone that stops it */
+.p3-chip { position: absolute; left: 50%; top: 50%; width: 26px; height: 26px; margin: -13px 0 0 -13px; border-radius: 50%; display: grid; place-items: center; font: 700 0.68rem var(--font-mono); color: #0a0e14; border: 2px solid #0a0e14; opacity: 0; animation: p3-chip 6.6s linear infinite; }
+.p3-c0 { --x: calc(var(--d) * -0.24); --y: calc(var(--d) * 0.1); --end: calc(var(--d) * 0.72 + 62px); background: #e39a5c; }
+.p3-c1 { --x: calc(var(--d) * 0.22); --y: calc(var(--d) * -0.12); --end: 62px; background: #f2c14e; animation-delay: -2.2s; }
+.p3-c2 { --x: calc(var(--d) * 0.02); --y: calc(var(--d) * 0.26); --end: calc(var(--d) * -0.72 + 62px); background: #9cc0ff; animation-delay: -4.4s; }
+@keyframes p3-chip {
+  0% { transform: translate3d(var(--x), var(--y), calc(var(--d) * 1.15)) var(--face); opacity: 0; }
+  8% { opacity: 1; }
+  45%, 82% { transform: translate3d(var(--x), var(--y), var(--end)) var(--face); opacity: 1; }
+  100% { transform: translate3d(var(--x), var(--y), var(--end)) var(--face) scale(0.4); opacity: 0; }
+}
+
+.p3-drop { position: absolute; left: 50%; top: 50%; width: 8px; height: 12px; margin: -6px 0 0 -4px; border-radius: 50% 50% 50% 50% / 62% 62% 38% 38%; background: var(--water); opacity: 0; animation: p3-drop 3.3s linear infinite; }
 .p3-drop.d2 { animation-delay: 1.1s; }
 .p3-drop.d3 { animation-delay: 2.2s; }
 @keyframes p3-drop {
-  0% { transform: translateZ(calc(var(--d) * 1.05)) rotateX(-62deg); opacity: 0; }
+  0% { transform: translateZ(calc(var(--d) * 1.25)) var(--face); opacity: 0; }
   10%, 88% { opacity: 1; }
-  100% { transform: translateZ(calc(var(--d) * -0.85)) rotateX(-62deg); opacity: 0; }
+  100% { transform: translateZ(calc(var(--d) * -1.0)) var(--face); opacity: 0; }
 }
+.p3-clean { position: absolute; left: 50%; top: 50%; width: 20px; height: 28px; margin: -14px 0 0 -10px; border-radius: 50% 50% 50% 50% / 64% 64% 36% 36%; background: radial-gradient(circle at 35% 62%, #e9f8ff, var(--water) 60%); transform: translateZ(calc(var(--d) * -1.08)) var(--face); box-shadow: 0 0 18px rgba(127, 214, 255, 0.55); }
+
+/* picking a zone lifts it and makes it glow */
+.puck3d[data-focus='0'] .p3-z0, .puck3d[data-focus='1'] .p3-z1, .puck3d[data-focus='2'] .p3-z2 { --lift: 16px; --glow-c: rgba(79, 195, 161, 0.9); --rim: #4fc3a1; }
+
 .p3-legend { margin-top: 6px; display: flex; flex-wrap: wrap; justify-content: center; gap: 8px 10px; }
-.p3-legend li { display: inline-flex; align-items: center; gap: 8px; padding: 6px 12px; border: 1px solid var(--line-strong); border-radius: 999px; font: 700 0.76rem var(--font-mono); letter-spacing: 0.04em; }
+.p3-key { display: inline-flex; align-items: center; gap: 8px; min-height: 40px; padding: 6px 14px; border: 1px solid var(--line-strong); border-radius: 999px; background: transparent; color: var(--ink); font: 700 0.76rem var(--font-mono); letter-spacing: 0.04em; cursor: pointer; }
+.p3-key:hover, .p3-key[aria-pressed='true'] { border-color: var(--accent); background: color-mix(in srgb, var(--accent) 16%, transparent); }
 .p3-dot { width: 10px; height: 10px; border-radius: 50%; }
 .p3-key-0 .p3-dot { background: #c98a4b; }
 .p3-key-1 .p3-dot { background: #5d6976; box-shadow: 0 0 0 1px var(--line-strong); }
 .p3-key-2 .p3-dot { background: #d9b877; }
+.p3-detail { min-height: 4.6em; max-width: 46ch; margin: 12px auto 0; color: var(--muted); font-size: 0.95rem; }
+.p3-detail strong { display: block; color: var(--ink); font-family: var(--font-head); }
+.p3-detail strong:empty { display: none; }
 
 /* ---- two glasses ---- */
 .glasses-figure { margin: 0; padding: clamp(16px, 3vw, 28px); background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius-lg); box-shadow: var(--shadow); text-align: center; }
@@ -769,7 +826,8 @@ a.src { display: inline-block; padding: 4px 0; }
 .cta-more a { color: #ffffff; font-weight: 600; margin-left: 14px; display: inline-block; padding: 4px 0; }
 
 @media (prefers-reduced-motion: reduce) {
-  .p3-drop { opacity: 0; }
+  .p3-drop, .p3-ripple { opacity: 0; }
+  .p3-chip { opacity: 1; transform: translate3d(var(--x), var(--y), var(--end)) var(--face); }
 }
 
 /* The Home headline is narrower than average in Syne, so it gets its own matched fallback to avoid a jump when the font loads. */

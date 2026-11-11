@@ -115,3 +115,30 @@ if (reg) {
     location.href = `mailto:${reg.dataset.mailto}?subject=${encodeURIComponent(reg.dataset.subject)}&body=${encodeURIComponent(lines.join('\n'))}`;
   });
 }
+
+/* 3D puck: pick a zone from the legend to lift it and read its job */
+const p3 = document.querySelector('.puck3d');
+const p3Detail = document.querySelector('.p3-detail');
+if (p3 && p3Detail) {
+  const keys = [...document.querySelectorAll('.p3-key')];
+  const title = p3Detail.querySelector('strong');
+  const text = p3Detail.querySelector('span');
+  const initial = text.innerHTML;
+  const show = (key) => {
+    keys.forEach((k) => k.setAttribute('aria-pressed', String(k === key)));
+    if (key) {
+      p3.dataset.focus = key.dataset.zone;
+      title.textContent = key.dataset.title;
+      text.textContent = key.dataset.text;
+    } else {
+      delete p3.dataset.focus;
+      title.textContent = '';
+      text.innerHTML = initial;
+    }
+  };
+  keys.forEach((key) => {
+    key.addEventListener('click', () => show(key.getAttribute('aria-pressed') === 'true' ? null : key));
+    key.addEventListener('mouseenter', () => show(key));
+    key.addEventListener('focus', () => show(key));
+  });
+}
