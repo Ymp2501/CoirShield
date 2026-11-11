@@ -137,7 +137,7 @@ if (p3 && p3Detail) {
     }
   };
   keys.forEach((key) => {
-    key.addEventListener('click', () => show(key.getAttribute('aria-pressed') === 'true' ? null : key));
+    key.addEventListener('click', () => show(key));
     key.addEventListener('mouseenter', () => show(key));
     key.addEventListener('focus', () => show(key));
   });
