@@ -101,3 +101,17 @@ if (tilt && !reduce && matchMedia('(hover: hover) and (pointer: fine)').matches)
     tilt.style.setProperty('--tx', '0deg');
   });
 }
+
+/* Partner registration: build a pre-filled email. Nothing is stored or sent by the site. */
+const reg = document.querySelector('.reg-form');
+if (reg) {
+  reg.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const lines = [...reg.querySelectorAll('input[data-label], textarea[data-label]')]
+      .filter((el) => el.value.trim())
+      .map((el) => `${el.dataset.label}: ${el.value.trim()}`);
+    const roles = [...reg.querySelectorAll('input[name="role"]:checked')].map((el) => el.value);
+    if (roles.length) lines.push(`Could take part in: ${roles.join(', ')}`);
+    location.href = `mailto:${reg.dataset.mailto}?subject=${encodeURIComponent(reg.dataset.subject)}&body=${encodeURIComponent(lines.join('\n'))}`;
+  });
+}

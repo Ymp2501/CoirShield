@@ -193,7 +193,7 @@ mark.tbd {
   border: 1px solid var(--line-strong); border-radius: 999px; cursor: pointer;
 }
 .nav-toggle-bars { width: 16px; height: 2px; background: currentColor; box-shadow: 0 5px 0 currentColor, 0 -5px 0 currentColor; }
-@media (max-width: 900px) {
+@media (max-width: 1080px) {
   .js .nav-toggle { display: inline-flex; }
   .js .site-nav { display: none; width: 100%; }
   .js .site-nav.open { display: block; }
@@ -787,3 +787,21 @@ a.src { display: inline-block; padding: 4px 0; }
 }
 .convos { display: grid; gap: 14px; margin-top: 12px; }
 .convos li { padding-top: 12px; border-top: 1px solid var(--line); }
+
+/* ---- partner registration form ---- */
+.reg-card { background: var(--surface); border: 1px solid var(--line-strong); border-radius: var(--radius-lg); padding: clamp(20px, 3vw, 32px); box-shadow: var(--shadow); }
+.reg-form { display: grid; gap: 18px; }
+.field-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+@media (max-width: 560px) { .field-grid { grid-template-columns: 1fr; } }
+.field { border: 0; padding: 0; min-width: 0; }
+.field label, .field legend { display: block; font-weight: 600; font-size: 0.98rem; margin-bottom: 6px; padding: 0; }
+.field input[type='text'], .field input[type='email'], .field input[type='tel'], .field textarea {
+  width: 100%; min-height: 48px; padding: 10px 12px; font: inherit; color: var(--ink); background: var(--surface-2);
+  border: 1px solid var(--line-strong); border-radius: 10px;
+}
+.field textarea { resize: vertical; }
+.checks { display: grid; gap: 4px; }
+.check { display: flex !important; align-items: center; gap: 10px; min-height: 40px; font-weight: 400 !important; margin: 0 !important; cursor: pointer; }
+.check input { width: 20px; height: 20px; accent-color: var(--accent); flex: none; }
+.form-note { color: var(--muted); font-size: 0.9rem; margin-top: 0 !important; }
+.reg-form .btn { justify-self: start; }

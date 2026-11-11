@@ -5,7 +5,7 @@ import { fileURLToPath } from 'node:url';
 const root = dirname(fileURLToPath(import.meta.url));
 
 // One HTML shell per page. Each shell is filled at build time from src/content.js.
-const PAGES = ['index', 'how-it-works', 'customers', 'evidence', 'business', 'team'];
+const PAGES = ['index', 'how-it-works', 'customers', 'evidence', 'business', 'team', 'partners'];
 
 function coirShieldPages() {
   let server;

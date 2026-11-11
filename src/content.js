@@ -50,6 +50,7 @@ export const site = {
     { id: 'evidence', label: 'Evidence' },
     { id: 'business', label: 'Business & Impact' },
     { id: 'team', label: 'Team' },
+    { id: 'partners', label: 'Partner With Us' },
   ],
   navToggleLabel: 'Menu',
   skipLink: 'Skip to main content',
@@ -331,6 +332,7 @@ export const pages = {
         { label: 'For Customers', href: 'customers' },
         { label: 'Business & Impact', href: 'business' },
         { label: 'Team', href: 'team' },
+        { label: 'Partner With Us', href: 'partners' },
       ],
     },
   },
@@ -832,6 +834,65 @@ export const pages = {
       title: 'Talk to us',
       text: 'Judges, mentors, SHG federations, NGOs and curious households are all welcome to write.',
       button: 'Email the team',
+    },
+  },
+
+  /* -------------------------------------------------------------- PARTNERS */
+  partners: {
+    title: 'Partner With Us — Coir-Shield',
+    description: 'NGOs can register their interest in becoming a Coir-Shield distribution partner: running water-testing camps, referring households and working with self-help groups. Prototype, not yet on sale.',
+
+    hero: {
+      eyebrow: 'For NGOs',
+      title: 'Register as a Coir-Shield distribution partner',
+      lead: 'If your NGO works on water, health or livelihoods in an arsenic-affected area, we would like to hear from you.',
+      notice: 'Coir-Shield is a prototype. It is not on sale yet and is not yet certified. Registering records your interest in a future pilot; it is not an order or a contract.',
+    },
+
+    role: {
+      eyebrow: 'What a partner does',
+      title: 'Where an NGO fits',
+      items: [
+        { icon: 'flask', title: 'Run water-testing camps', text: 'Test handpump and borewell water for free, so households learn what is in their own water.' },
+        { icon: 'arrow', title: 'Refer households', text: 'Offer Coir-Shield to households whose water tests above the limit.' },
+        { icon: 'users', title: 'Work with self-help groups', text: 'Connect us with SHGs who sell the puck, swap it at the door each month and collect the spent one.' },
+        { icon: 'return', title: 'Help close the loop', text: 'Support the return of spent pucks to the block aggregation point.' },
+      ],
+    },
+
+    form: {
+      eyebrow: 'Register',
+      title: 'Tell us about your organisation',
+      lead: 'Fill in the form and press the button. Your email app opens with the details filled in; press send there.',
+      // Optional: paste the link of an online form (for example a Google Form) to send people there instead of email.
+      externalFormUrl: '',
+      externalFormLabel: 'Open the registration form',
+      subject: 'NGO distribution partner registration',
+      fields: [
+        { name: 'organisation', label: 'Organisation name', type: 'text', required: true, autocomplete: 'organization' },
+        { name: 'contact', label: 'Contact person', type: 'text', required: true, autocomplete: 'name' },
+        { name: 'email', label: 'Email', type: 'email', required: true, autocomplete: 'email' },
+        { name: 'phone', label: 'Phone', type: 'tel', required: false, autocomplete: 'tel' },
+        { name: 'area', label: 'State and districts where you work', type: 'text', required: true },
+        { name: 'households', label: 'Roughly how many households you reach', type: 'text', required: false },
+      ],
+      rolesLabel: 'How you could take part (tick all that apply)',
+      roles: ['Water-testing camps', 'Referring households', 'Linking us to SHGs', 'Puck distribution', 'Collecting spent pucks'],
+      messageLabel: 'Anything else we should know',
+      submit: 'Create registration email',
+      requiredNote: 'Fields marked * are required.',
+      privacy: 'This website does not store or send your details. They go only into the email you choose to send.',
+      noEmail: 'Our contact address is not published yet, so the email will open without a recipient.',
+    },
+
+    next: {
+      eyebrow: 'What happens next',
+      title: 'After you register',
+      steps: [
+        { icon: 'check', title: 'We reply', text: 'A team member writes back to arrange a call.' },
+        { icon: 'users', title: 'We talk', text: 'We learn about your area and you see where the prototype stands, including what is not yet proven.' },
+        { icon: 'target', title: 'We plan a pilot together', text: 'Only after laboratory and column tests are done. Until then nothing is sold or distributed.' },
+      ],
     },
   },
 };

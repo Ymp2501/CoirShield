@@ -571,6 +571,56 @@ ${
 }`;
 }
 
+/* -------------------------------------------------------------- PARTNERS */
+function partners() {
+  const p = pages.partners;
+  const f = p.form;
+  const hasEmail = Boolean(site.contactEmail) && !/\[TBD/.test(site.contactEmail);
+  const field = (x) => `
+      <div class="field">
+        <label for="f-${x.name}">${fmt(x.label)}${x.required ? ' <span aria-hidden="true">*</span>' : ''}</label>
+        <input id="f-${x.name}" name="${x.name}" type="${x.type}" data-label="${esc(x.label)}"${x.required ? ' required' : ''}${x.autocomplete ? ` autocomplete="${x.autocomplete}"` : ''}>
+      </div>`;
+  const formBlock = f.externalFormUrl
+    ? `<p class="center-row"><a class="btn btn-primary" href="${esc(f.externalFormUrl)}" rel="noopener noreferrer"><span>${esc(f.externalFormLabel)}</span>${icon('arrow')}</a></p>`
+    : `<form class="reg-form" action="mailto:${hasEmail ? esc(site.contactEmail) : ''}" method="post" enctype="text/plain" data-mailto="${hasEmail ? esc(site.contactEmail) : ''}" data-subject="${esc(f.subject)}">
+      <p class="form-note">${fmt(f.requiredNote)}</p>
+      <div class="field-grid">${f.fields.map(field).join('')}</div>
+      <fieldset class="field">
+        <legend>${fmt(f.rolesLabel)}</legend>
+        <div class="checks">${f.roles.map((x, i) => `<label class="check"><input type="checkbox" name="role" value="${esc(x)}" id="f-role-${i}"><span>${fmt(x)}</span></label>`).join('')}</div>
+      </fieldset>
+      <div class="field">
+        <label for="f-message">${fmt(f.messageLabel)}</label>
+        <textarea id="f-message" name="message" rows="4" data-label="${esc(f.messageLabel)}"></textarea>
+      </div>
+      <button class="btn btn-primary" type="submit"><span>${esc(f.submit)}</span>${icon('arrow')}</button>
+      <p class="form-note">${fmt(f.privacy)}</p>
+      ${hasEmail ? '' : `<p class="form-note">${fmt(f.noEmail)} ${fmt(site.contactEmail || '')}</p>`}
+    </form>`;
+  return `
+${pageHero(p.hero)}
+<div class="section section-tight">
+  <aside class="disclaimer" role="note">${icon('alert')}<p>${fmt(p.hero.notice)}</p></aside>
+</div>
+
+${section('role', `${head(p.role, { id: 'role-h' })}${iconCards(p.role.items, 'cols-4')}`)}
+
+${section(
+  'register',
+  `<div class="split-grid top">
+    <div>
+      <p class="eyebrow">${fmt(f.eyebrow)}</p>
+      <h2 id="register-h">${fmt(f.title)}</h2>
+      <p class="lead">${fmt(f.lead)}</p>
+      <h3 class="sub-title">${fmt(p.next.title)}</h3>
+      ${timeline(p.next.steps)}
+    </div>
+    <div class="reg-card">${formBlock}</div>
+  </div>`,
+)}`;
+}
+
 const bodyClass = `theme-${site.theme === 'dark' ? 'dark' : 'light'}`;
 
 export const PAGE_MAP = {
@@ -580,4 +630,5 @@ export const PAGE_MAP = {
   evidence: { data: pages.evidence, render: evidence, bodyClass },
   business: { data: pages.business, render: business, bodyClass },
   team: { data: pages.team, render: team, bodyClass },
+  partners: { data: pages.partners, render: partners, bodyClass },
 };
