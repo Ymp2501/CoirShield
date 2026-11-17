@@ -72,7 +72,6 @@ export const site = {
 
   footer: {
     blurb: 'A low-cost, zero-electricity, gravity-fed household water filter puck made largely from coconut agricultural waste.',
-    context: 'Conrad Challenge 2026-27 · The Water Challenge',
     school: 'Jayshree Periwal International School (JPIS), Jaipur',
     navTitle: 'Pages',
     legendTitle: 'Number key',
@@ -810,7 +809,7 @@ export const pages = {
     hero: {
       eyebrow: 'Team',
       title: 'Students, a bench, and a stubborn problem',
-      lead: 'We are a student team from Jayshree Periwal International School (JPIS), Jaipur, entering the Conrad Challenge 2026-27 in The Water Challenge category.',
+      lead: 'We are a student team from Jayshree Periwal International School (JPIS), Jaipur.',
     },
 
     story: {

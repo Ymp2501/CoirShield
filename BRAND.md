@@ -21,9 +21,10 @@ Keep clear space around the lockup equal to the height of one band group. Do not
 
 | Role | Typeface | Why |
 | --- | --- | --- |
-| English display | Syne 700 / 800 | Existing brand face. |
-| Numbers, labels, ▲ ● ○ tags | Space Mono 400 / 700 | Existing brand face. Fixed-width digits make numbers and their tags line up. |
-| Body and all Hindi | Mukta 400 / 600 | One family covers Devanagari and Latin, so Hindi and English sit together at the same weight and size. Open licence (OFL). Used for all body text so customer-facing and judge-facing pages read the same. |
+| Display headings | Syne 700 / 800 | Existing brand face, shared with the deck and video. |
+| Numbers, labels, ▲ ● ○ tags | Space Mono 400 / 700 | Existing brand face. Fixed-width digits line numbers and their tags up. Kept to short labels and figures; full sentences are never set in it. |
+| Body text | Inter 400–700 | A screen-first sans-serif with a tall x-height, so long passages stay easy to read on low-cost phones. It is neutral, which lets the wide Syne headings carry the personality. |
+| Hindi | Mukta 600 | One of the best-drawn Devanagari web fonts; used only for Hindi lines, marked `lang="hi"`. |
 
 ## Hindi
 

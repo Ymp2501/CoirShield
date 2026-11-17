@@ -1,6 +1,6 @@
 /* ==========================================================================
    Coir-Shield — brand system (see BRAND.md)
-   Syne = headings · Space Mono = data, labels, tags · Mukta = body and Hindi
+   Syne = headings · Space Mono = numbers, labels, tags · Inter = body · Mukta = Hindi
    Site scheme is chosen by `site.theme` in src/content.js: 'light' (default) or 'dark'.
    Brand teal #4fc3a1; near-black #0a0e14.
    ========================================================================== */
@@ -89,13 +89,14 @@
   --maxw: 1160px;
   --font-head: 'Syne', 'Syne Fallback', 'Trebuchet MS', system-ui, sans-serif;
   --font-mono: 'Space Mono', 'Courier New', ui-monospace, monospace;
-  --font-body: 'Mukta', 'Mukta Fallback', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --font-body: 'Inter', 'Inter Fallback', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --font-hindi: 'Mukta', 'Nirmala UI', 'Kohinoor Devanagari', sans-serif;
 }
 
 /* Fallback faces sized to match the web fonts, so text does not jump when they load. */
 @font-face { font-family: 'Syne Fallback'; font-weight: 800; src: local('Arial Bold'), local('Arial'), local('Liberation Sans Bold'), local('Liberation Sans'); size-adjust: 164%; }
 @font-face { font-family: 'Syne Fallback'; font-weight: 700; src: local('Arial Bold'), local('Arial'), local('Liberation Sans Bold'), local('Liberation Sans'); size-adjust: 114%; }
-@font-face { font-family: 'Mukta Fallback'; src: local('Arial'), local('Liberation Sans'); size-adjust: 93%; }
+@font-face { font-family: 'Inter Fallback'; src: local('Arial'), local('Liberation Sans'); size-adjust: 107%; }
 
 *,
 *::before,
@@ -104,8 +105,10 @@
 html { -webkit-text-size-adjust: 100%; scroll-padding-top: 84px; }
 body {
   font-family: var(--font-body);
-  font-size: 1.125rem;
-  line-height: 1.6;
+  font-size: 1.0625rem;
+  line-height: 1.7;
+  font-feature-settings: 'cv11', 'ss01';
+  letter-spacing: -0.006em;
   color: var(--ink);
   background: var(--bg);
   -webkit-font-smoothing: antialiased;
@@ -353,7 +356,7 @@ mark.tbd {
 .facts { display: grid; gap: 12px; }
 .facts > div { padding: 18px 20px; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); }
 .facts dt { font-family: var(--font-mono); font-size: 0.76rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); }
-.facts dd { font-family: var(--font-mono); font-weight: 700; font-size: 1.08rem; margin-top: 6px; line-height: 1.35; }
+.facts dd { font-family: var(--font-body); font-weight: 600; font-size: 1.05rem; margin-top: 6px; line-height: 1.45; letter-spacing: -0.01em; }
 .facts dd mark.tbd { font-size: 0.8rem; font-weight: 400; }
 .split-grid .facts { margin-top: 0; }
 .split-grid > div > .facts:not(:first-child) { margin-top: 24px; }
@@ -573,7 +576,7 @@ tbody tr:last-child > * { border-bottom: 0; }
 /* ==========================================================================
    Additions for the two-chamber filter, SHG channel and unit economics
    ========================================================================== */
-.hi { font-family: 'Mukta', var(--font-body); font-weight: 600; letter-spacing: 0; text-transform: none; }
+.hi { font-family: var(--font-hindi); font-weight: 600; letter-spacing: 0; text-transform: none; }
 .hero-tagline { margin-top: 14px; font-weight: 600; font-size: 1.15rem; color: var(--accent-text); }
 .footer-tagline { font-weight: 600; color: var(--accent-text) !important; }
 
@@ -581,7 +584,8 @@ tbody tr:last-child > * { border-bottom: 0; }
 .hero-band.theme-dark { color: var(--ink); border-bottom: 1px solid var(--line); }
 
 /* sources */
-.src { font-family: var(--font-mono); font-size: 0.78rem; line-height: 1.5; color: var(--muted); }
+.src { font-family: var(--font-body); font-size: 0.84rem; font-weight: 500; line-height: 1.5; color: var(--muted); }
+a.src { text-decoration-thickness: 1px; text-underline-offset: 3px; }
 a.src { color: var(--accent-text); }
 .fact-src { display: block; margin-top: 8px; font-family: var(--font-body); font-weight: 400; font-size: 0.9rem; line-height: 1.5; color: var(--muted); }
 p.fact-src { margin-top: 10px !important; }
@@ -940,3 +944,9 @@ a.src { display: inline-block; padding: 4px 0; }
   .gl-bubble, .emblem-ring, .hs-drops circle { animation: none !important; }
   .gl-bubble { opacity: 0; }
 }
+
+/* Typography: Inter for reading, Syne for display, Space Mono only for numbers and short labels */
+h1, h2 { letter-spacing: -0.02em; }
+.lead, .hero-sub { letter-spacing: -0.01em; }
+p, li, dd { hanging-punctuation: first; }
+strong, b { font-weight: 600; }
