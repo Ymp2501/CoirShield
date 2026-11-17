@@ -251,7 +251,12 @@ export const pages = {
       alt: 'Illustration of two identical glasses of clear water, labelled A and B. They look exactly the same.',
       labels: ['A', 'B'],
       captions: ['Looks clear', 'Looks clear'],
-      note: 'Illustration, not a photograph of test samples.',
+      results: ['Below the limit', 'Above the limit'],
+      hint: 'Take a guess. Then test them.',
+      testButton: 'Test the water',
+      resetButton: 'Look again',
+      revealText: 'Glass B was above the limit. Nothing about how it looked gave it away. That is why Coir-Shield starts with a free test of each household’s own water.',
+      note: 'Illustration, not a real test result.',
     },
 
     problem: {
@@ -260,6 +265,18 @@ export const pages = {
         value: '46.5% ●',
         text: 'of 4,780 ● tubewells surveyed across Ballia, Varanasi and Ghazipur exceeded 10 µg/L ● arsenic, and 10% ● exceeded 300 µg/L ●.',
         source: '[[Chakraborti et al., Sci. Total Environ. 2006, doi:10.1016/j.scitotenv.2006.06.015|https://doi.org/10.1016/j.scitotenv.2006.06.015]]',
+      },
+      // Dot grid beside the big number. over / severe are percentages used for drawing only.
+      grid: {
+        over: 46.5,
+        severe: 10,
+        alt: 'A grid of one hundred dots, one for each hundredth of the tubewells surveyed. Just under half are lit amber for above the arsenic guideline, and a tenth of all dots are red for above the much higher level.',
+        caption: 'Each dot stands for one in a hundred tubewells surveyed.',
+        key: [
+          { cls: 'severe', label: 'Above 300 µg/L ●' },
+          { cls: 'over', label: 'Above 10 µg/L ●' },
+          { cls: 'ok', label: 'At or below 10 µg/L ●' },
+        ],
       },
       paras: [
         'Across the Indo-Gangetic Plain (IGP), many households drink groundwater from handpumps and borewells. Both metals are toxic when people drink them over years. The WHO guideline for each is 10 µg/L ●, and both values are designated provisional.',

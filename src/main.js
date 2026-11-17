@@ -1,4 +1,5 @@
 import { initPuck3d } from './puck3d.js';
+import { initAmbient } from './ambient.js';
 
 // Progressive enhancement only. The site is fully readable without this file.
 
@@ -128,3 +129,23 @@ if (p3 && p3Detail) {
 /* Hero animation (Home) */
 const p3Stage = document.querySelector('[data-puck3d]');
 if (p3Stage) initPuck3d(p3Stage);
+
+/* Ambient particles behind the page-hero bands */
+document.querySelectorAll('canvas.ambient').forEach((c) => initAmbient(c));
+
+/* The two glasses (Home): test strips reveal what the eye can't */
+document.querySelectorAll('[data-glasses]').forEach((fig) => {
+  const btn = fig.querySelector('.gl-test');
+  const label = btn && btn.querySelector('span');
+  const out = fig.querySelector('.gl-result');
+  if (!btn || !label || !out) return;
+  btn.addEventListener('click', () => {
+    const on = !fig.classList.contains('tested');
+    fig.classList.toggle('tested', on);
+    label.textContent = on ? btn.dataset.reset : btn.dataset.test;
+    out.textContent = on ? out.dataset.text : '';
+  });
+});
+
+/* Life-cycle ring token: freeze under reduced motion */
+if (reduce) document.querySelectorAll('.lifecycle-svg').forEach((s) => s.pauseAnimations && s.pauseAnimations());

@@ -36,6 +36,7 @@ const I = {
   gauge: '<path d="M4 18a8 8 0 1 1 16 0"/><path d="m12 18 4-6"/><path d="M4 18h16"/>',
   megaphone: '<path d="M3 10v4h3l8 4V6l-8 4Z"/><path d="M17 9a4 4 0 0 1 0 6"/><path d="M7 14v5h3v-3.5"/>',
   arrow: '<path d="M5 12h14"/><path d="m12 5 7 7-7 7"/>',
+  handshake: '<path d="m11 17 2 2a1 1 0 1 0 3-3"/><path d="m14 14 2.5 2.5a1 1 0 1 0 3-3l-3.88-3.88a3 3 0 0 0-4.24 0l-.88.88a1 1 0 1 1-3-3l2.81-2.81a5.79 5.79 0 0 1 7.06-.87l.47.28a2 2 0 0 0 1.42.25L21 4"/><path d="m21 3 1 11h-2"/><path d="M3 3 2 14l6.5 6.5a1 1 0 1 0 3-3"/><path d="M3 4h8"/>',
   check: '<path d="m5 12 5 5 9-10"/>',
   alert: '<path d="M12 3 2 20h20Z"/><path d="M12 10v5M12 17.5v.500"/>',
 };
@@ -132,23 +133,51 @@ export function puckSvg(zones, t, { id = 'puck', compact = false } = {}) {
 }
 
 /* ----------------------------------------------------------- TWO GLASSES */
-/** Two identical glasses of clear water. g = pages.home.glasses */
+/** Two identical glasses of clear water, with test strips that reveal what the eye can't. g = pages.home.glasses */
 export function glassesSvg(g) {
-  const glass = (x, letter, caption) => `
-  <g transform="translate(${x} 0)">
-    <path d="M22 62 30 196q1 8 9 8h62q8 0 9-8l8-134Z" class="gl-water"/>
-    <path d="M22 62q48 10 96 0" class="gl-surface"/>
-    <path d="M18 24 30 196q1 8 9 8h62q8 0 9-8L122 24" class="gl-glass"/>
-    <path d="M36 80 42 176" class="gl-shine"/>
-    <circle cx="70" cy="126" r="19" class="gl-badge"/>
-    <text x="70" y="133" text-anchor="middle" class="gl-letter">${esc(letter)}</text>
-    <text x="70" y="232" text-anchor="middle" class="gl-caption">${esc(caption)}</text>
+  const rnd = (() => { let a = 7; return () => ((a = (a * 9301 + 49297) % 233280) / 233280); })();
+  const particles = (n, cls) =>
+    Array.from({ length: n }, (_, k) => {
+      const x = 34 + rnd() * 72, y = 96 + rnd() * 100, r = 1.6 + rnd() * 1.6;
+      return `<g class="gl-as ${cls}" style="--i:${k}"><circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="${(r * 3).toFixed(1)}" class="gl-as-halo"/><circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="${r.toFixed(1)}" class="gl-as-core"/></g>`;
+    }).join('');
+  const bubbles = (seed) =>
+    Array.from({ length: 6 }, (_, k) => {
+      const x = 40 + ((seed * 37 + k * 23) % 60), r = 1.2 + (k % 3) * 0.7;
+      return `<circle cx="${x}" cy="196" r="${r}" class="gl-bubble" style="--d:${(k * 0.9 + seed * 0.4).toFixed(1)}s"/>`;
+    }).join('');
+  const glass = (x, i) => `
+  <g class="gl-glass-g gl-${i ? 'b' : 'a'}" transform="translate(${x} 0)">
+    <ellipse cx="70" cy="214" rx="56" ry="9" class="gl-shadow"/>
+    <path d="M24 84 32 200q1 10 11 10h54q10 0 11-10l8-116Z" class="gl-water"/>
+    <ellipse cx="70" cy="84" rx="46" ry="7" class="gl-meniscus"/>
+    ${bubbles(i + 1)}
+    ${particles(i ? 26 : 4, i ? 'gl-as-many' : 'gl-as-few')}
+    <path d="M18 40 30 200q1.5 14 15 14h50q13.5 0 15-14L122 40" class="gl-glass"/>
+    <ellipse cx="70" cy="40" rx="52" ry="8" class="gl-rim"/>
+    <path d="M34 60 42 190" class="gl-shine"/>
+    <path d="M108 70 103 150" class="gl-shine gl-shine-2"/>
+    <g class="gl-strip">
+      <rect x="62" y="-8" width="16" height="80" rx="3" class="gl-strip-body"/>
+      <rect x="62" y="52" width="16" height="20" rx="2" class="gl-pad gl-pad-${i ? 'b' : 'a'}"/>
+    </g>
+    <circle cx="70" cy="140" r="19" class="gl-badge"/>
+    <text x="70" y="147" text-anchor="middle" class="gl-letter">${esc(g.labels[i])}</text>
+    <text x="70" y="240" text-anchor="middle" class="gl-caption gl-before">${esc(g.captions[i])}</text>
+    <text x="70" y="240" text-anchor="middle" class="gl-caption gl-after gl-after-${i ? 'b' : 'a'}">${esc(g.results[i])}</text>
   </g>`;
   return `
-<svg class="glasses-svg" viewBox="0 0 360 244" role="img" aria-labelledby="gl-title">
+<svg class="glasses-svg" viewBox="0 -54 360 306" role="img" aria-labelledby="gl-title">
   <title id="gl-title">${esc(g.alt)}</title>
-  ${glass(30, g.labels[0], g.captions[0])}
-  ${glass(190, g.labels[1], g.captions[1])}
+  <defs>
+    <linearGradient id="gl-water-grad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#bfe9ff" stop-opacity="0.34"/>
+      <stop offset="0.6" stop-color="#7fd6ff" stop-opacity="0.18"/>
+      <stop offset="1" stop-color="#4fc3a1" stop-opacity="0.22"/>
+    </linearGradient>
+  </defs>
+  ${glass(30, 0)}
+  ${glass(190, 1)}
 </svg>`;
 }
 
@@ -225,6 +254,10 @@ export function lifecycleSvg(lc) {
   <path d="M${sx.toFixed(1)} ${sy.toFixed(1)}A${R} ${R} 0 1 1 ${ex.toFixed(1)} ${ey.toFixed(1)}" class="lc-ring"/>
   ${heads}
   ${nodes}
+  <g class="lc-token" aria-hidden="true">
+    <circle r="11" class="lc-token-halo"><animateMotion dur="12s" repeatCount="indefinite" path="M${sx.toFixed(1)} ${sy.toFixed(1)}A${R} ${R} 0 1 1 ${ex.toFixed(1)} ${ey.toFixed(1)}"/></circle>
+    <circle r="5" class="lc-token-core"><animateMotion dur="12s" repeatCount="indefinite" path="M${sx.toFixed(1)} ${sy.toFixed(1)}A${R} ${R} 0 1 1 ${ex.toFixed(1)} ${ey.toFixed(1)}"/></circle>
+  </g>
   <text x="${C}" y="${C - 2}" text-anchor="middle" class="lc-centre">${esc(lc.centre[0])}</text>
   <text x="${C}" y="${C + 20}" text-anchor="middle" class="lc-centre">${esc(lc.centre[1])}</text>
 </svg>`;

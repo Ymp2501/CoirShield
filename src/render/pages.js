@@ -20,13 +20,22 @@ const head = (h, { level = 2, id = '', center = false } = {}) => `
 const section = (id, inner, cls = '') =>
   `<section class="section ${cls}" aria-labelledby="${id}-h">${inner}</section>`;
 
-const pageHero = (h, extra = '') => `
-<section class="page-hero" aria-labelledby="page-h">
-  <p class="eyebrow">${fmt(h.eyebrow)}</p>
-  <h1 id="page-h">${fmt(h.title)}</h1>
-  <p class="lead">${fmt(h.lead)}</p>
-  ${extra}
-</section>`;
+const pageHero = (h, extra = '', art = 'drop') => `
+<div class="page-band theme-dark">
+  <canvas class="ambient" aria-hidden="true"></canvas>
+  <section class="page-hero" aria-labelledby="page-h">
+    <div class="page-hero-copy">
+      <p class="eyebrow">${fmt(h.eyebrow)}</p>
+      <h1 id="page-h">${fmt(h.title)}</h1>
+      <p class="lead">${fmt(h.lead)}</p>
+      ${extra}
+    </div>
+    <div class="emblem" aria-hidden="true">
+      <span class="emblem-ring r1"><i></i></span><span class="emblem-ring r2"><i></i></span><span class="emblem-ring r3"><i></i></span>
+      <span class="emblem-core">${icon(art)}</span>
+    </div>
+  </section>
+</div>`;
 
 const btn = (b, cls) =>
   `<a class="btn ${cls}" href="${pageHref(b.href)}"><span>${esc(b.label)}</span>${icon('arrow')}</a>`;
@@ -108,7 +117,7 @@ const timeline = (steps) => `
 <ol class="timeline">
   ${steps
     .map(
-      (s) => `<li>
+      (s, i) => `<li${reveal(i)}>
     <span class="tl-icon">${icon(s.icon)}</span>
     <div><h3>${fmt(s.title)}</h3><p>${fmt(s.text)}</p></div>
   </li>`,
@@ -123,6 +132,16 @@ const puckFigure = (caption, opts) => `
 </figure>`;
 
 /* ----------------------------------------------------------------- HOME */
+// One hundred dots: severe first, then the rest of the exceedances, then the remainder.
+function tubewellDots(gd) {
+  const full = Math.floor(gd.over);
+  const part = gd.over - full;
+  return Array.from({ length: 100 }, (_, i) => {
+    const cls = i < gd.severe ? 'severe' : i < full ? 'over' : i === full && part > 0 ? 'over half' : 'ok';
+    return `<span class="tw-dot ${cls}" style="--i:${i}"></span>`;
+  }).join('');
+}
+
 // Hero animation: a canvas scene drawn by src/puck3d.js. The static cross-section is the no-JS fallback.
 function puck3d(h) {
   return `
@@ -171,11 +190,17 @@ function home() {
 </section>
 </div>
 
+<div class="band-dark theme-dark">
 ${section(
   'glasses',
   `<div class="split-grid">
-    <figure class="glasses-figure"${reveal()}>
+    <figure class="glasses-figure" data-glasses${reveal()}>
       ${glassesSvg(g)}
+      <div class="gl-controls">
+        <p class="gl-hint">${fmt(g.hint)}</p>
+        <button type="button" class="btn btn-primary gl-test" data-test="${esc(g.testButton)}" data-reset="${esc(g.resetButton)}">${icon('flask')}<span>${esc(g.testButton)}</span></button>
+      </div>
+      <p class="gl-result" aria-live="polite" data-text="${esc(g.revealText)}"></p>
       <figcaption>${fmt(g.note)}</figcaption>
     </figure>
     <div${reveal(1)}>
@@ -190,16 +215,24 @@ ${section(
   'problem',
   `<h2 id="problem-h" class="sr-only">${fmt(p.problem.title)}</h2>
   <div class="bigstat"${reveal()}>
-    <p class="bigstat-value">${fmt(p.problem.big.value)}</p>
-    <div>
+    <div class="bigstat-copy">
+      <p class="bigstat-value">${fmt(p.problem.big.value)}</p>
       <p class="bigstat-text">${fmt(p.problem.big.text)}</p>
       <p class="fact-src">${fmt(p.problem.big.source)}</p>
     </div>
+    <figure class="tw">
+      <div class="tw-grid" role="img" aria-label="${esc(p.problem.grid.alt)}">${tubewellDots(p.problem.grid)}</div>
+      <figcaption>
+        <ul class="tw-key">${p.problem.grid.key.map((k) => `<li><span class="tw-dot ${k.cls} on"></span>${fmt(k.label)}</li>`).join('')}</ul>
+        <p>${fmt(p.problem.grid.caption)}</p>
+      </figcaption>
+    </figure>
   </div>
   <div class="prose-2">${p.problem.paras.map((x) => `<p>${fmt(x)}</p>`).join('')}</div>
   ${factList(p.problem.facts, 'facts-text facts-row')}`,
   'section-flush',
 )}
+</div>
 
 ${section(
   'solution',
@@ -269,7 +302,7 @@ function how() {
   const m = p.model;
   const d = p.device;
   return `
-${pageHero(p.hero)}
+${pageHero(p.hero, '', 'layers')}
 
 ${section(
   'device',
@@ -329,7 +362,7 @@ ${section(
 function customers() {
   const p = pages.customers;
   return `
-${pageHero(p.hero, `<p class="hero-tagline">${fmt(site.nameHi)} · ${fmt(site.taglineHi)}</p>`)}
+${pageHero(p.hero, `<p class="hero-tagline">${fmt(site.nameHi)} · ${fmt(site.taglineHi)}</p>`, 'home')}
 <div class="section section-tight">
   <aside class="disclaimer" role="note">${icon('alert')}<p>${fmt(p.hero.notice)}</p></aside>
 </div>
@@ -394,7 +427,7 @@ function evidence() {
       <p>${fmt(p.noValidated.text)}</p>
     </div>`;
   return `
-${pageHero(p.hero)}
+${pageHero(p.hero, '', 'flask')}
 <div class="section section-tight">
   ${legend(true)}
   ${disclaimerBox()}
@@ -431,7 +464,7 @@ ${section(
 function business() {
   const p = pages.business;
   return `
-${pageHero(p.hero)}
+${pageHero(p.hero, '', 'coin')}
 
 ${section(
   'market',
@@ -521,7 +554,9 @@ function team() {
   const p = pages.team;
   const member = (m, tag = '') => `
   <li class="member">
-    <span class="avatar" aria-hidden="true">${icon('users')}</span>
+    <span class="avatar${/\[/.test(m.name) ? '' : ' avatar-mono'}" aria-hidden="true">${
+      /\[/.test(m.name) ? icon('users') : esc(m.name.split(/\s+/).map((w) => w[0]).slice(0, 2).join(''))
+    }</span>
     ${tag ? `<p class="eyebrow">${fmt(tag)}</p>` : ''}
     <h3>${fmt(m.name)}</h3>
     <p class="member-role">${fmt(m.role)}</p>
@@ -529,7 +564,7 @@ function team() {
     ${m.bio ? `<p>${fmt(m.bio)}</p>` : ''}
   </li>`;
   return `
-${pageHero(p.hero)}
+${pageHero(p.hero, '', 'users')}
 
 ${section(
   'story',
@@ -604,7 +639,7 @@ function partners() {
       ${hasEmail ? '' : `<p class="form-note">${fmt(f.noEmail)} ${fmt(site.contactEmail || '')}</p>`}
     </form>`;
   return `
-${pageHero(p.hero)}
+${pageHero(p.hero, '', 'handshake')}
 <div class="section section-tight">
   <aside class="disclaimer" role="note">${icon('alert')}<p>${fmt(p.hero.notice)}</p></aside>
 </div>
