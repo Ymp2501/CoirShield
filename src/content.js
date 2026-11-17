@@ -232,10 +232,16 @@ export const pages = {
       secondary: { label: 'Check the evidence', href: 'evidence' },
       note: 'Student prototype. Not yet certified.',
       figureAlt: 'Three-dimensional view of the Coir-Shield puck, pulled apart into its three zones: iron guard on top, the arsenic zone in the middle and the lead zone at the bottom, with water dripping down through them.',
-      figureCaption: 'One puck, pulled apart. Pick a zone to see its job. Move your pointer to tilt it.',
+      figureCaption: 'One puck, pulled apart. Watch each metal stop at the zone built to catch it. Pick a zone to see its job.',
+      metalKeyLabel: 'In the animation',
+      metalKey: [
+        { symbol: 'Fe', name: 'iron' },
+        { symbol: 'As', name: 'arsenic' },
+        { symbol: 'Pb', name: 'lead' },
+        { symbol: '', name: 'water' },
+      ],
       inLabel: 'Raw water in',
       outLabel: 'Filtered water out',
-      meshLabel: 'Separator mesh',
     },
 
     glasses: {

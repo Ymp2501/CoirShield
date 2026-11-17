@@ -123,34 +123,25 @@ const puckFigure = (caption, opts) => `
 </figure>`;
 
 /* ----------------------------------------------------------------- HOME */
-// 3D exploded puck: stacks of thin discs in CSS 3D space. No library.
+// Hero animation: a canvas scene drawn by src/puck3d.js. The static cross-section is the no-JS fallback.
 function puck3d(h) {
-  const slices = (n) => Array.from({ length: n }, (_, k) => `<i style="--k:${k}"></i>`).join('');
-  const chips = ['Fe', 'As', 'Pb'];
-  const layer = (i) => `
-      <div class="p3-layer p3-z${i}" data-layer="${i}">
-        ${slices(16)}
-        <span class="p3-face" aria-hidden="true"></span>
-        <span class="p3-tag"><b>${esc(zones[i].label)}</b> <em>${esc(zones[i].short)}</em> <small>${esc(zones[i].stops)}</small></span>
-      </div>`;
   return `
 <figure class="puck3d-figure">
-  <div class="puck3d" role="img" aria-label="${esc(h.figureAlt)}" data-tilt>
-    <div class="p3-scene">
-      <div class="p3-shadow"></div>
-      <span class="p3-io p3-out">${esc(h.outLabel)}</span>
-      ${layer(2)}
-      <div class="p3-mesh p3-m2"></div>
-      ${layer(1)}
-      <div class="p3-mesh p3-m1"></div>
-      ${layer(0)}
-      <div class="p3-ripple"></div>
-      <span class="p3-io p3-in">${esc(h.inLabel)}</span>
-      ${chips.map((c, i) => `<span class="p3-chip p3-c${i}">${c}</span>`).join('')}
-      <span class="p3-drop d1"></span><span class="p3-drop d2"></span><span class="p3-drop d3"></span>
-      <span class="p3-clean"></span>
-    </div>
+  <div class="p3-stage" role="img" aria-label="${esc(h.figureAlt)}" data-puck3d>
+    <canvas class="p3-canvas" aria-hidden="true"></canvas>
+    <div class="p3-fallback" aria-hidden="true">${puckSvg(zones, pages.how.svg, { id: 'hero-puck', compact: true })}</div>
+    ${zones
+      .map(
+        (z, i) => `<div class="p3-label p3-label-${i}" data-zi="${i}" aria-hidden="true">
+      <span class="p3-line"></span>
+      <span class="p3-body"><b>${esc(z.label)}</b> <em>${esc(z.short)}</em> <small><i class="p3-mdot p3-m${i}"></i>${esc(z.stops)}</small></span>
+    </div>`,
+      )
+      .join('')}
+    <span class="p3-io p3-in" aria-hidden="true">${esc(h.inLabel)}</span>
+    <span class="p3-io p3-out" aria-hidden="true">${esc(h.outLabel)}</span>
   </div>
+  <p class="p3-metals"><span>${esc(h.metalKeyLabel)}:</span> ${h.metalKey.map((m, i) => `<span class="p3-mk"><i class="p3-mdot p3-m${m.symbol ? i : 'w'}"></i>${m.symbol ? `<b>${esc(m.symbol)}</b> ` : ''}${esc(m.name)}</span>`).join('')}</p>
   <ul class="p3-legend">
     ${zones.map((z, i) => `<li><button type="button" class="p3-key p3-key-${i}" data-zone="${i}" data-title="${esc(`${z.label} · ${z.name}`)}" data-text="${esc(z.plain)}" aria-pressed="false"><span class="p3-dot"></span>${esc(z.label)} · ${esc(z.short)}</button></li>`).join('')}
   </ul>

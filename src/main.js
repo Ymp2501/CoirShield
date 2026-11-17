@@ -1,3 +1,5 @@
+import { initPuck3d } from './puck3d.js';
+
 // Progressive enhancement only. The site is fully readable without this file.
 
 /* Mobile navigation */
@@ -81,26 +83,6 @@ document.querySelectorAll('[data-story]').forEach((root) => {
   steps.forEach((s) => storyIo.observe(s));
 });
 
-/* 3D puck (Home): tilt with the pointer. Mouse only, and never when reduced motion is on. */
-const tilt = document.querySelector('[data-tilt]');
-if (tilt && !reduce && matchMedia('(hover: hover) and (pointer: fine)').matches) {
-  const area = tilt.closest('.hero') || tilt;
-  let frame = 0;
-  area.addEventListener('pointermove', (e) => {
-    cancelAnimationFrame(frame);
-    frame = requestAnimationFrame(() => {
-      const r = area.getBoundingClientRect();
-      const x = (e.clientX - r.left) / r.width - 0.5;
-      const y = (e.clientY - r.top) / r.height - 0.5;
-      tilt.style.setProperty('--tz', `${(x * 36).toFixed(1)}deg`);
-      tilt.style.setProperty('--tx', `${(-y * 14).toFixed(1)}deg`);
-    });
-  });
-  area.addEventListener('pointerleave', () => {
-    tilt.style.setProperty('--tz', '0deg');
-    tilt.style.setProperty('--tx', '0deg');
-  });
-}
 
 /* Partner registration: build a pre-filled email. Nothing is stored or sent by the site. */
 const reg = document.querySelector('.reg-form');
@@ -117,7 +99,7 @@ if (reg) {
 }
 
 /* 3D puck: pick a zone from the legend to lift it and read its job */
-const p3 = document.querySelector('.puck3d');
+const p3 = document.querySelector('.puck3d-figure');
 const p3Detail = document.querySelector('.p3-detail');
 if (p3 && p3Detail) {
   const keys = [...document.querySelectorAll('.p3-key')];
@@ -142,3 +124,7 @@ if (p3 && p3Detail) {
     key.addEventListener('focus', () => show(key));
   });
 }
+
+/* Hero animation (Home) */
+const p3Stage = document.querySelector('[data-puck3d]');
+if (p3Stage) initPuck3d(p3Stage);
